@@ -44,8 +44,16 @@ export const POST = async (
 ) => {
   try {
     const requestUrl = new URL(req.url);
-    const { action, amount, txnIndexForChecking, wallet, memberAddress, newThreshold } =
-      validatedQueryParams(requestUrl);
+    const {
+      action,
+      amount,
+      txnIndexForChecking,
+      wallet,
+      memberAddress,
+      newThreshold,
+      txIndex,
+      multisigAddress,
+    } = validatedQueryParams(requestUrl);
 
     const body: ActionPostRequest = await req.json();
     let payerAccount: PublicKey;
@@ -57,6 +65,7 @@ export const POST = async (
 
     const multisg = params.vaultId;
     multisigPda = new PublicKey(multisg);
+    console.log(multisigPda);
 
     [vault_account] = multisig.getVaultPda({
       multisigPda,
@@ -176,6 +185,51 @@ export const POST = async (
       );
     }
 
+    if (action == 'approve') {
+      const instructionProposalCreate = multisig.instructions.proposalCreate({
+        multisigPda,
+        creator: payerAccount,
+        rentPayer: payerAccount,
+        transactionIndex: BigInt(Number(txIndex)),
+      });
+      const instruction = multisig.instructions.proposalApprove({
+        multisigPda,
+        transactionIndex: BigInt(Number(txIndex)),
+        member: payerAccount,
+        programId: multisig.PROGRAM_ID,
+      });
+      transaction.add(instructionProposalCreate).add(instruction);
+    }
+    if (action == 'execute') {
+      const instructionProposalCreate = multisig.instructions.proposalCreate({
+        multisigPda,
+        creator: payerAccount,
+        rentPayer: payerAccount,
+        transactionIndex: BigInt(Number(txIndex)),
+      });
+      const instruction = (await multisig.instructions.vaultTransactionExecute({
+        connection,
+        multisigPda,
+        transactionIndex: BigInt(Number(txIndex)),
+        member: payerAccount,
+      })).instruction;
+      transaction.add(instructionProposalCreate).add(instruction);
+    }
+    if (action == 'reject') {
+      const instructionProposalCreate = multisig.instructions.proposalCreate({
+        multisigPda,
+        creator: payerAccount,
+        rentPayer: payerAccount,
+        transactionIndex: BigInt(Number(txIndex)),
+      });
+      const instruction = multisig.instructions.proposalReject({
+        multisigPda,
+        transactionIndex: BigInt(Number(txIndex)),
+        member: payerAccount,
+      })
+      transaction.add(instructionProposalCreate).add(instruction);
+    }
+
     transaction.feePayer = payerAccount;
     transaction.recentBlockhash = (
       await connection.getLatestBlockhash()
@@ -212,11 +266,19 @@ export const OPTIONS = async (req: Request) => {
 function validatedQueryParams(requestUrl: URL) {
   let action;
   let amount = 0.001;
+  let multisigAddress = '';
   let txnIndexForChecking = 0;
+  let txIndex = 0;
   let wallet = '';
   let memberAddress = '';
   let newThreshold = 0;
 
+  if (requestUrl.searchParams.get('multisigAddress')) {
+    multisigAddress = requestUrl.searchParams.get('multisigAddress')!;
+  }
+  if (requestUrl.searchParams.get('txIndex')) {
+    txIndex = parseInt(requestUrl.searchParams.get('txIndex')!);
+  }
   if (requestUrl.searchParams.get('newThreshold')) {
     newThreshold = parseInt(requestUrl.searchParams.get('newThreshold')!);
   }
@@ -245,5 +307,14 @@ function validatedQueryParams(requestUrl: URL) {
       requestUrl.searchParams.get('wallet') ||
       '46Cx8SHg8jojWgG6QdytHZK8Fr2eheK6YqZDaSy49q4V';
   }
-  return { action, amount, txnIndexForChecking, wallet, memberAddress, newThreshold };
+  return {
+    action,
+    amount,
+    txnIndexForChecking,
+    wallet,
+    memberAddress,
+    newThreshold,
+    txIndex,
+    multisigAddress,
+  };
 }

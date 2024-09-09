@@ -84,5 +84,78 @@ export const OPTIONS = GET;
 
 export const POST = async (req: Request) => {
   const requestUrl = new URL(req.url);
+  const body: ActionPostRequest = await req.json();
+  const account : PublicKey = new PublicKey(body.account);
   const {multisigAddress, transactionNumber} = await validatedQueryParams(requestUrl);
+  const connection = new Connection(clusterApiUrl("mainnet-beta"))
+
+  let multisigPda = new PublicKey(multisigAddress);
+  let [vault_account] = multisig.getVaultPda({
+    multisigPda,
+    index: 0,
+  });
+  const multisigAccount = await multisig.accounts.Multisig.fromAccountAddress(
+    connection,
+    multisigPda
+  );
+  const multisigInfo = await fetch(
+    `https://v4-api.squads.so/multisig/${vault_account.toString()}`
+  ).then((res) => res.json());
+  const metadata = multisigInfo.metadata;
+
+  const baseHref = new URL(
+    `/api/actions/squad/${multisigAddress}`,
+    requestUrl.origin
+  ).toString();
+
+  const transaction = new Transaction();
+  transaction.add(SystemProgram.transfer({
+    fromPubkey: account,
+    toPubkey: account,
+    lamports: 0
+  }));
+  transaction.feePayer = account;
+  transaction.recentBlockhash = (
+    await connection.getLatestBlockhash()
+  ).blockhash;
+
+  const payload : ActionPostResponse = await createPostResponse({
+    fields: {
+      transaction,
+      message: "",
+      links: {
+        next: {
+          type: "inline",
+          action: {
+            title: `${metadata.name}`,
+            description: `voting for transaction number ${transactionNumber}`,
+            label: "squads",
+            icon: `https://ucarecdn.com/7ae08282-2d17-4025-8206-8991c0a5865d/-/preview/1030x1030/`,
+            type: "action",
+            links: {
+              actions: [
+                {
+                  label: "Approve",
+                  href: `${baseHref}?action=approve&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`
+                },
+                {
+                  label: "Reject",
+                  href: `${baseHref}?action=reject&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`
+                },
+                {
+                  label: "Execute",
+                  href: `${baseHref}?action=execute&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`
+                },
+                {
+                  label: "Approve and Execute",
+                  href: `${baseHref}?action=approveandexecute`
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  });
+  return Response.json(payload, {headers: ACTIONS_CORS_HEADERS});
 }
