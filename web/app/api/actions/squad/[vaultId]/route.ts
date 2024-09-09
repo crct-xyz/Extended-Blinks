@@ -201,19 +201,14 @@ export const POST = async (
       transaction.add(instructionProposalCreate).add(instruction);
     }
     if (action == 'execute') {
-      const instructionProposalCreate = multisig.instructions.proposalCreate({
-        multisigPda,
-        creator: payerAccount,
-        rentPayer: payerAccount,
-        transactionIndex: BigInt(Number(txIndex)),
-      });
+      console.log("ahhaahah")
       const instruction = (await multisig.instructions.vaultTransactionExecute({
         connection,
         multisigPda,
         transactionIndex: BigInt(Number(txIndex)),
         member: payerAccount,
       })).instruction;
-      transaction.add(instructionProposalCreate).add(instruction);
+      transaction.add(instruction);
     }
     if (action == 'reject') {
       const instructionProposalCreate = multisig.instructions.proposalCreate({
