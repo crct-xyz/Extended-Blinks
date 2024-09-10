@@ -184,7 +184,6 @@ export const POST = async (
         })
       );
     }
-
     if (action == 'approve') {
       const instructionProposalCreate = multisig.instructions.proposalCreate({
         multisigPda,
@@ -199,6 +198,7 @@ export const POST = async (
         programId: multisig.PROGRAM_ID,
       });
       transaction.add(instructionProposalCreate).add(instruction);
+      console.log("somethiung")
     }
     if (action == 'execute') {
       console.log("ahhaahah")

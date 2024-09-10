@@ -24,6 +24,8 @@ export default function Page() {
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/config?address=${address}`}>Config wallet</a>
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/deposit?address=${address}`}>Deposit</a>
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/vote?address=${address}`}>vote on a given transaction</a>
+
+      <a href="/bot">bot</a>
     </div>
   )
 }

@@ -146,10 +146,6 @@ export const POST = async (req: Request) => {
                   label: "Execute",
                   href: `${baseHref}?action=execute&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`
                 },
-                {
-                  label: "Approve and Execute",
-                  href: `${baseHref}?action=approveandexecute`
-                }
               ]
             }
           }
