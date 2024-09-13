@@ -1,4 +1,11 @@
-"use client";
+"use client";import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import React, { useState, FormEvent } from 'react';
 
 export default function Page() {
@@ -24,6 +31,18 @@ export default function Page() {
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/config?address=${address}`}>Config wallet</a>
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/deposit?address=${address}`}>Deposit</a>
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/vote?address=${address}`}>vote on a given transaction</a>
+      <Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card Content</p>
+  </CardContent>
+  <CardFooter>
+    <p>Card Footer</p>
+  </CardFooter>
+</Card>
 
       <a href="/bot">bot</a>
     </div>
