@@ -7,14 +7,15 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": []
+		"include": ["web/*.ts", "web/*.tsx", "web/*.js", "web/*.jsx"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab"
 	},
 	"organizeImports": {
-		"enabled": true
+		"enabled": true,
+		"include": ["web/*.ts", "web/*.tsx", "web/*.js", "web/*.jsx"]
 	},
 	"linter": {
 		"enabled": true,
