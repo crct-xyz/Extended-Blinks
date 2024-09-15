@@ -30,42 +30,19 @@ import * as multisig from '@sqds/multisig';
 import { Bot, InlineKeyboard } from 'grammy';
 import { metadata } from '../layout';
 import TelegramBot from 'node-telegram-bot-api';
+import { match } from 'assert';
 
 const bot = new TelegramBot('7216921050:AAEISmruLCEXGap4zLcpDyzGyLKWTIBq2SU', {
   polling: true,
 });
 const subscribers = new Set<number>();
 const connection = new Connection(clusterApiUrl('mainnet-beta'));
+let multisigPda : PublicKey
 
 function sendTelegramMessage(message: string): void {
   subscribers.forEach((chatId) => {
     bot.sendMessage(chatId, message);
   });
-}
-
-async function checkTransactions(): Promise<void> {
-  const multisigPda = new PublicKey(
-    'Gr5FaqkMmypxUJfADQsoYN3moknprc5LzMF2qh3SiP8m'
-  );
-  let lastCheckedSignature: string | undefined;
-
-  while (true) {
-    const signatures = await connection.getSignaturesForAddress(multisigPda, {
-      limit: 5,
-    });
-    for (const sigInfo of signatures) {
-      if (sigInfo.signature === lastCheckedSignature) {
-        break;
-      }
-      if (sigInfo.confirmationStatus === 'finalized') {
-        const message = `new transaction detected: \nSignature: ${sigInfo.signature}\nSlot: ${sigInfo.slot}\nVote for the transaction here: https://dial.to/?action=solana-action%3Ahttp://localhost:3000/api/actions/squad/vote?address=${multisigPda}`;
-        sendTelegramMessage(message);
-        lastCheckedSignature = sigInfo.signature;
-        break;
-      }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 20000));
-  }
 }
 
 bot.onText(/\/start/, (msg) => {
@@ -87,6 +64,57 @@ bot.onText(/\/stop/, (msg) => {
     'Notifications stopped. You will no longer receive updates.'
   );
 });
+
+bot.onText(/\/setMultisig (.+)/, async (msg, match) => {
+  const chatId = msg.chat.id;
+  if (match && match[1]) {
+    try {
+      multisigPda = new PublicKey(match[1]);
+      bot.sendMessage(
+        chatId,
+        `Multisig address set successfully to: ${multisigPda.toBase58()}`
+      );
+      await checkTransactions();
+    } catch (error) {
+      bot.sendMessage(
+        chatId,
+        'Invalid public key. Please provide a valid Solana address.'
+      );
+    }
+  } else {
+    bot.sendMessage(
+      chatId,
+      'Please provide a valid Solana address. Usage: /setmultisig <address>'
+    );
+  }
+})
+
+async function checkTransactions(): Promise<void> {
+  if (!multisigPda) {
+    console.error('Multisig PDA not set. Please use /setMultisig to set it.');
+    return;
+  }
+  let lastCheckedSignature: string | undefined;
+
+  while (true) {
+    const signatures = await connection.getSignaturesForAddress(multisigPda, {
+      limit: 5,
+    });
+    console.log(signatures)
+    for (const sigInfo of signatures) {
+      if (sigInfo.signature === lastCheckedSignature) {
+        break;
+      }
+      if (sigInfo.confirmationStatus === 'finalized') {
+        const message = `new transaction detected: \nSignature: ${sigInfo.signature}\nSlot: ${sigInfo.slot}\nVote for the transaction here: https://dial.to/?action=solana-action%3Ahttp://localhost:3000/api/actions/squad/vote?address=${multisigPda}`;
+        sendTelegramMessage(message);
+        lastCheckedSignature = sigInfo.signature;
+        break;
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 20000));
+  }
+}
 
 // Main function
 async function main() {
