@@ -7,6 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { SocialIcon } from "react-social-icons";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -15,6 +16,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import type React from "react";
 import { useState, FormEvent } from "react";
@@ -35,8 +37,11 @@ export default function Page() {
 	const SelectMenu = ({ values }: { values?: string[] }) => {
 		return (
 			<Select>
-				<SelectTrigger className="w-[180px]">
-					<SelectValue placeholder="" />
+				<SelectTrigger
+					style={{ outline: "1px solid darkgray" }}
+					className="w-[180px] "
+				>
+					<SelectValue placeholder="Select an option" />
 				</SelectTrigger>
 				<SelectContent style={{ backgroundColor: "white" }}>
 					{values?.map((value) => {
@@ -55,7 +60,7 @@ export default function Page() {
 	return (
 		<div style={{ display: "flex", flexDirection: "column" }}>
 			<input type="text" onChange={handleAddress} />
-			<a
+			{/* <a
 				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad?address=${address}`}
 			>
 				Make transaction
@@ -74,25 +79,72 @@ export default function Page() {
 				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/vote?address=${address}`}
 			>
 				vote on a given transaction
-			</a>
-			<Card style={{ maxWidth: "300px" }}>
-				<CardHeader>
-					<CardTitle>What kind of transaction do you want to make?</CardTitle>
+			</a> */}
+			<Card style={{ maxWidth: "300px", backgroundColor: "lightgray" }}>
+				<CardHeader style={{ gap: "5px" }}>
+					<CardTitle style={{ color: "black" }}>
+						What kind of transaction do you want to make?
+					</CardTitle>
 					<CardDescription>
 						<SelectMenu values={["Approve", "Deposit", "Vote"]} />
 					</CardDescription>
 				</CardHeader>
-				<CardContent>
-					<p>Which kind of transaction you wanna get triggered?</p>
+				<CardHeader style={{ gap: "5px" }}>
+					<CardTitle style={{ color: "black" }}>
+						Which kind of transaction you wanna get triggered?
+					</CardTitle>
 					<SelectMenu values={["Approve", "Deposit", "Vote"]} />
+				</CardHeader>
+				<CardHeader style={{ gap: "5px" }}>
+					<CardTitle style={{ color: "black" }}>
+						What event should trigger the Blink generation?
+					</CardTitle>
+					<SelectMenu values={["Approve", "Deposit", "Vote"]} />
+				</CardHeader>
+				<CardContent>
+					<CardTitle style={{ color: "black" }}>
+						How do you want to be notified?
+					</CardTitle>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-around",
+							marginTop: "10px",
+						}}
+					>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								gap: "5px",
+							}}
+						>
+							<SocialIcon
+								href="javascript:void(0)"
+								url="https://telegram.com"
+								style={{ pointerEvents: "none", width: "30px", height: "30px" }}
+							/>
+							<Checkbox />
+						</div>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								gap: "5px",
+							}}
+						>
+							<SocialIcon
+								href="javascript:void(0)"
+								url="https://x.com"
+								style={{ pointerEvents: "none", width: "30px", height: "30px" }}
+							/>
+							<Checkbox />
+						</div>
+					</div>
 				</CardContent>
-				<CardFooter>
-					<p>Card Footer</p>
-					<Input />
-				</CardFooter>
 			</Card>
-
-			<a href="/bot">bot</a>
 		</div>
 	);
 }
