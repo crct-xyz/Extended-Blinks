@@ -20,8 +20,33 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import type React from "react";
 import { useState, FormEvent } from "react";
+import { Button } from "@/components/ui/button";
+import { useWallet } from "@solana/wallet-adapter-react";
+
+const SelectMenu = ({ values }: { values?: string[] }) => {
+	return (
+		<Select>
+			<SelectTrigger
+				style={{ outline: "1px solid darkgray" }}
+				className="w-[180px] "
+			>
+				<SelectValue placeholder="Select an option" />
+			</SelectTrigger>
+			<SelectContent style={{ backgroundColor: "white" }}>
+				{values?.map((value) => {
+					return (
+						<SelectItem key={value} value={value}>
+							{value}
+						</SelectItem>
+					);
+				})}
+			</SelectContent>
+		</Select>
+	);
+};
 
 export default function Page() {
+	const { connected } = useWallet();
 	const [address, setAddress] = useState("");
 	const baseUrl =
 		process.env.NODE_ENV === "production"
@@ -32,119 +57,99 @@ export default function Page() {
 		setAddress(event.target.value);
 	};
 
-	const handleRedirection = () => {};
-
-	const SelectMenu = ({ values }: { values?: string[] }) => {
-		return (
-			<Select>
-				<SelectTrigger
-					style={{ outline: "1px solid darkgray" }}
-					className="w-[180px] "
-				>
-					<SelectValue placeholder="Select an option" />
-				</SelectTrigger>
-				<SelectContent style={{ backgroundColor: "white" }}>
-					{values?.map((value) => {
-						return (
-							<SelectItem key={value} value={value}>
-								{value}
-							</SelectItem>
-						);
-					})}
-				</SelectContent>
-			</Select>
-		);
-	};
 	// https://dial.to/?action=solana-action%3A${baseUrl}/api/action/approve?squad=${address}`
 
-	return (
-		<div style={{ display: "flex", flexDirection: "column" }}>
-			<input type="text" onChange={handleAddress} />
-			{/* <a
-				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad?address=${address}`}
-			>
-				Make transaction
-			</a>
-			<a
-				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/config?address=${address}`}
-			>
-				Config wallet
-			</a>
-			<a
-				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/deposit?address=${address}`}
-			>
-				Deposit
-			</a>
-			<a
-				href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/vote?address=${address}`}
-			>
-				vote on a given transaction
-			</a> */}
-			<Card style={{ maxWidth: "300px", backgroundColor: "lightgray" }}>
-				<CardHeader style={{ gap: "5px" }}>
-					<CardTitle style={{ color: "black" }}>
-						What kind of transaction do you want to make?
-					</CardTitle>
-					<CardDescription>
+	if (connected) {
+		return (
+			<div style={{ display: "flex", justifyContent: "center" }}>
+				<Card style={{ maxWidth: "300px", backgroundColor: "lightgray" }}>
+					<CardHeader style={{ gap: "5px" }}>
+						<CardTitle style={{ color: "black" }}>
+							What kind of transaction do you want to make?
+						</CardTitle>
+						<CardDescription>
+							<SelectMenu values={["Approve", "Deposit", "Vote"]} />
+						</CardDescription>
+					</CardHeader>
+					<CardHeader style={{ gap: "5px" }}>
+						<CardTitle style={{ color: "black" }}>
+							Which kind of transaction you wanna get triggered?
+						</CardTitle>
 						<SelectMenu values={["Approve", "Deposit", "Vote"]} />
-					</CardDescription>
-				</CardHeader>
-				<CardHeader style={{ gap: "5px" }}>
-					<CardTitle style={{ color: "black" }}>
-						Which kind of transaction you wanna get triggered?
-					</CardTitle>
-					<SelectMenu values={["Approve", "Deposit", "Vote"]} />
-				</CardHeader>
-				<CardHeader style={{ gap: "5px" }}>
-					<CardTitle style={{ color: "black" }}>
-						What event should trigger the Blink generation?
-					</CardTitle>
-					<SelectMenu values={["Approve", "Deposit", "Vote"]} />
-				</CardHeader>
-				<CardContent>
-					<CardTitle style={{ color: "black" }}>
-						How do you want to be notified?
-					</CardTitle>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "space-around",
-							marginTop: "10px",
-						}}
-					>
+					</CardHeader>
+					<CardHeader style={{ gap: "5px" }}>
+						<CardTitle style={{ color: "black" }}>
+							What event should trigger the Blink generation?
+						</CardTitle>
+						<SelectMenu values={["Approve", "Deposit", "Vote"]} />
+					</CardHeader>
+					<CardContent>
+						<CardTitle style={{ color: "black" }}>
+							How do you want to be notified?
+						</CardTitle>
 						<div
 							style={{
 								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								gap: "5px",
+								justifyContent: "space-around",
+								marginTop: "10px",
 							}}
 						>
-							<SocialIcon
-								href="javascript:void(0)"
-								url="https://telegram.com"
-								style={{ pointerEvents: "none", width: "30px", height: "30px" }}
-							/>
-							<Checkbox />
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+									gap: "5px",
+								}}
+							>
+								<SocialIcon
+									href="javascript:void(0)"
+									url="https://telegram.com"
+									style={{
+										pointerEvents: "none",
+										width: "30px",
+										height: "30px",
+									}}
+								/>
+								<Checkbox />
+							</div>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+									gap: "5px",
+								}}
+							>
+								<SocialIcon
+									href="javascript:void(0)"
+									url="https://x.com"
+									style={{
+										pointerEvents: "none",
+										width: "30px",
+										height: "30px",
+									}}
+								/>
+								<Checkbox />
+							</div>
 						</div>
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								gap: "5px",
-							}}
-						>
-							<SocialIcon
-								href="javascript:void(0)"
-								url="https://x.com"
-								style={{ pointerEvents: "none", width: "30px", height: "30px" }}
-							/>
-							<Checkbox />
-						</div>
-					</div>
-				</CardContent>
-			</Card>
-		</div>
-	);
+					</CardContent>
+					<CardHeader style={{ gap: "5px" }}>
+						<CardTitle style={{ color: "black" }}>
+							What is your Telegram Handle?
+						</CardTitle>
+						<Input
+							placeholder="Type your"
+							style={{ outline: "1px solid darkgray" }}
+						/>
+					</CardHeader>
+					<CardContent style={{ display: "flex", justifyContent: "center" }}>
+						<Button variant="primary" size="lg">
+							Submit
+						</Button>
+					</CardContent>
+				</Card>
+			</div>
+		);
+	}
 }
