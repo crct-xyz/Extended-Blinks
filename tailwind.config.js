@@ -14,4 +14,5 @@ const config = {
 	},
 	plugins: [],
 };
-export { config };
+
+module.exports = config;
