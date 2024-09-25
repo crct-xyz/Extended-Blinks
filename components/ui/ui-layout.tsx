@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-// import { AccountChecker } from "../account/account-ui";
+import { AccountChecker } from "../account/account-ui";
 import {
 	ClusterChecker,
 	ClusterUiSelect,
@@ -62,9 +62,9 @@ export function UiLayout({
 					<ClusterUiSelect />
 				</div>
 			</div>
-			{/* <ClusterChecker>
+			<ClusterChecker>
 				<AccountChecker />
-			</ClusterChecker> */}
+			</ClusterChecker>
 			<div className="flex-grow mx-4 lg:mx-auto">
 				<Suspense
 					fallback={
