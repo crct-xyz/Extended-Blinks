@@ -28,7 +28,7 @@ export function UiLayout({
 	return (
 		<div className="h-full flex flex-col bg-black">
 			<div
-				className="navbar bg-base-300 text-neutral-content flex items-center space-y-2 md:space-y-0"
+				className="flex flex-row items-center navbar bg-base-300 text-neutral-content"
 				style={{
 					background:
 						"linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(114,9,121,1) 61%, rgba(0,212,255,1) 100%)",
@@ -44,7 +44,7 @@ export function UiLayout({
 							src="/logo.png"
 						/>
 					</Link>
-					<ul className="menu menu-horizontal px-1 space-x-2">
+					<ul className="menu menu-horizontal px-1 ">
 						{links.map(({ label, path }) => (
 							<li key={path}>
 								<Link
