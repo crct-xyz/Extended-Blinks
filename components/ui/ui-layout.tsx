@@ -28,7 +28,7 @@ export function UiLayout({
 	return (
 		<div className="h-full flex flex-col bg-black">
 			<div
-				className="navbar bg-base-300 text-neutral-content flex-col md:flex-row space-y-2 md:space-y-0"
+				className="navbar bg-base-300 text-neutral-content flex items-center space-y-2 md:space-y-0"
 				style={{
 					background:
 						"linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(114,9,121,1) 61%, rgba(0,212,255,1) 100%)",
@@ -57,7 +57,7 @@ export function UiLayout({
 						))}
 					</ul>
 				</div>
-				<div className="flex-none space-x-2">
+				<div className="flex items-center space-x-2">
 					<WalletButton />
 					<ClusterUiSelect />
 				</div>
