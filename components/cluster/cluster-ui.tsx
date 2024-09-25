@@ -69,11 +69,12 @@ export function ClusterUiSelect() {
 			</label>
 			<ul
 				tabIndex={0}
-				className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+				className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box md:w-52 mt-4"
 			>
 				{clusters.map((item) => (
 					<li key={item.name}>
 						<button
+							type="button"
 							className={`btn btn-sm ${
 								item.active ? "btn-primary" : "btn-ghost"
 							}`}
@@ -169,6 +170,7 @@ export function ClusterUiTable() {
 											item.name
 										) : (
 											<button
+												type="button"
 												title="Select cluster"
 												className="link link-secondary"
 												onClick={() => setCluster(item)}
@@ -187,6 +189,7 @@ export function ClusterUiTable() {
 							</td>
 							<td className="space-x-2 whitespace-nowrap text-center">
 								<button
+									type="button"
 									disabled={item?.active}
 									className="btn btn-xs btn-default btn-outline"
 									onClick={() => {
