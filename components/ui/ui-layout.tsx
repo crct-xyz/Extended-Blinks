@@ -17,7 +17,7 @@ import {
 	ExplorerLink,
 } from "../cluster/cluster-ui";
 import toast, { Toaster } from "react-hot-toast";
-import LogoIcon from "components/logo-icon/logo-icon";
+import LogoIcon from "components/icons/logo-icon";
 
 const orbitron = Orbitron({ subsets: ["latin"] });
 
@@ -31,7 +31,7 @@ export function UiLayout({
 	const pathname = usePathname();
 
 	return (
-		<div className="flex flex-col md:h-full  bg-[#1E1E1E]">
+		<div className="flex flex-col md:h-full bg-[#1E1E1E]">
 			<div className="flex flex-row items-center navbar bg-base-300 text-neutral-content px-4 md:px-10 py-2 justify-between rounded-xl border-solid border-2 border-light-white">
 				<LogoIcon />
 				<SocialIcon url="https://x.com" />
