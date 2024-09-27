@@ -19,5 +19,7 @@ body {
 }
 
 .wallet-adapter-dropdown-list {
-	display: none;
+	li {
+		display: none;
+	}
 }
