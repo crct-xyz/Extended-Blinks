@@ -41,9 +41,7 @@ export default function Page() {
 						<button type="button" className="h-16 w-16">
 							<JupyterIcon />
 						</button>
-						<button type="button">
-							<TensorIcon />
-						</button>
+						<button type="button">{/* <TensorIcon /> */}</button>
 					</div>
 				</div>
 				<div className="flex flex-col text-center">
