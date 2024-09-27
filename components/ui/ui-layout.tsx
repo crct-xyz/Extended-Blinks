@@ -40,7 +40,7 @@ export function UiLayout({
 			<ClusterChecker>
 				<AccountChecker />
 			</ClusterChecker>
-			<div className="flex-grow">
+			<div className="flex flex-col md:w-full py-5 h-screen">
 				<Suspense
 					fallback={
 						<div className="text-center my-32">
