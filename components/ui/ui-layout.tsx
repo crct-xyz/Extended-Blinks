@@ -32,7 +32,7 @@ export function UiLayout({
 
 	return (
 		<div className="flex flex-col md:h-full bg-[#1E1E1E]">
-			<div className="flex flex-row items-center navbar bg-base-300 text-neutral-content px-4 md:px-10 py-2 justify-between rounded-xl border-solid border-2 border-light-white">
+			<div className="flex flex-row items-center navbar bg-base-300 text-neutral-content px-2 md:px-10 py-2 justify-between rounded-xl border-solid border-2 border-light-white">
 				<LogoIcon />
 				{/* <SocialIcon url="https://telegram.com" /> */}
 				<SocialIcon url="https://x.com" />
@@ -41,7 +41,7 @@ export function UiLayout({
 			<ClusterChecker>
 				<AccountChecker />
 			</ClusterChecker>
-			<div className="flex flex-col md:w-full py-5 md:h-screen">
+			<div className="flex flex-col md:w-full py-5 md:h-screen px-5">
 				<Suspense
 					fallback={
 						<div className="text-center my-32">
