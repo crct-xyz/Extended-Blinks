@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import * as React from "react";
 const SquadsIcon = (props) => (
 	<svg
@@ -8,6 +10,7 @@ const SquadsIcon = (props) => (
 		fill="none"
 		{...props}
 	>
+		<title>squads icon</title>
 		<path fill="url(#a)" d="M0 0h198v35H0z" />
 		<defs>
 			<pattern
