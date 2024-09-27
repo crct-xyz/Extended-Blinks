@@ -6,6 +6,7 @@ import { useState, FormEvent } from "react";
 import SquadsIcon from "components/icons/squads-icon";
 import YellowIcon from "components/icons/yellow-icon";
 import TensorIcon from "components/icons/tensor-icon";
+import JupyterIcon from "components/icons/jupyter-icon";
 
 export default function Page() {
 	const [address, setAddress] = useState("");
@@ -32,12 +33,12 @@ export default function Page() {
 					<span className="text-white">EXECUTION</span>
 				</div>
 				<div className="flex flex-col md:flex-row h-full gap-12 py-10 justify-center items-center">
-					<div className="flex flex-col gap-5 px-5 py-5 w-80 md:w-92 border-solid border-2 border-light-white rounded-lg bg-[#837e7e]">
+					<div className="flex flex-col justify-between items-center gap-5 px-5 py-5 h-[332px] w-80 md:w-92 border-solid border-2 border-light-white rounded-lg bg-[#837e7e]">
 						<button type="button">
 							<SquadsIcon />
 						</button>
-						<button type="button">
-							<YellowIcon />
+						<button type="button" className="h-16 w-16">
+							<JupyterIcon />
 						</button>
 						<button type="button">
 							<TensorIcon />
