@@ -1,8 +1,10 @@
 "use client";
 
 import { WalletButton } from "../solana/solana-provider";
+import { Orbitron } from "next/font/google";
 import * as React from "react";
 import { type ReactNode, Suspense, useEffect, useRef } from "react";
+import { SocialIcon } from "react-social-icons";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -15,6 +17,9 @@ import {
 	ExplorerLink,
 } from "../cluster/cluster-ui";
 import toast, { Toaster } from "react-hot-toast";
+import LogoIcon from "components/logo-icon/logo-icon";
+
+const orbitron = Orbitron({ subsets: ["latin"] });
 
 export function UiLayout({
 	children,
@@ -26,46 +31,16 @@ export function UiLayout({
 	const pathname = usePathname();
 
 	return (
-		<div className="h-full flex flex-col bg-black">
-			<div
-				className="flex flex-row items-center navbar bg-base-300 text-neutral-content"
-				style={{
-					background:
-						"linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(114,9,121,1) 61%, rgba(0,212,255,1) 100%)",
-				}}
-			>
-				<div className="flex-1">
-					<Link className="btn btn-ghost normal-case text-xl" href="/">
-						<Image
-							className="h-4 md:h-6"
-							alt="Logo"
-							width={100}
-							height={100}
-							src="/logo.png"
-						/>
-					</Link>
-					<ul className="menu menu-horizontal px-1 ">
-						{links.map(({ label, path }) => (
-							<li key={path}>
-								<Link
-									className={pathname.startsWith(path) ? "active" : ""}
-									href={path}
-								>
-									{label}
-								</Link>
-							</li>
-						))}
-					</ul>
-				</div>
-				<div className="flex items-center space-x-2">
-					<WalletButton />
-					<ClusterUiSelect />
-				</div>
+		<div className="flex flex-col md:h-full  bg-[#1E1E1E]">
+			<div className="flex flex-row items-center navbar bg-base-300 text-neutral-content px-4 md:px-10 py-2 justify-between rounded-xl border-solid border-2 border-light-white">
+				<LogoIcon />
+				<SocialIcon url="https://x.com" />
+				<WalletButton />
 			</div>
 			<ClusterChecker>
 				<AccountChecker />
 			</ClusterChecker>
-			<div className="flex-grow mx-4 lg:mx-auto">
+			<div className="flex-grow">
 				<Suspense
 					fallback={
 						<div className="text-center my-32">

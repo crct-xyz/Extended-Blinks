@@ -3,6 +3,7 @@ import { UiLayout } from "../components/ui/ui-layout";
 import { ClusterProvider } from "../components/cluster/cluster-data-access";
 import { SolanaProvider } from "../components/solana/solana-provider";
 import { ReactQueryProvider } from "./react-query-provider";
+import { Orbitron } from "next/font/google";
 
 export const metadata = {
 	title: "action-chaining",
@@ -14,6 +15,8 @@ const links: { label: string; path: string }[] = [
 	{ label: "Clusters", path: "/clusters" },
 ];
 
+const orbitron = Orbitron({ subsets: ["latin"] });
+
 export default function RootLayout({
 	children,
 }: {
@@ -21,7 +24,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body>
+			<body className={orbitron.className}>
 				<ReactQueryProvider>
 					<ClusterProvider>
 						<SolanaProvider>
