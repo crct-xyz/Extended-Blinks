@@ -16,7 +16,7 @@ import "./styles.css";
 
 export const WalletButton = dynamic(
 	async () =>
-		(await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+		(await import("@solana/wallet-adapter-react-ui")).WalletModalButton,
 	{ ssr: false },
 );
 

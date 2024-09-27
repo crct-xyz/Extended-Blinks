@@ -110,6 +110,14 @@ export default function Page() {
 			<div className="flex flex-col gap-5 text-center items-center mt-[40px]">
 				<span className="text-[#00CED1]">COMING SOON</span>
 			</div>
+			<div className="flex flex-col gap-5 text-center items-center mt-[40px]">
+				<button
+					type="button"
+					className="text-black bg-[#00CED1] rounded-xl p-3"
+				>
+					JOIN THE WAITLIST
+				</button>
+			</div>
 		</Fragment>
 	);
 }
