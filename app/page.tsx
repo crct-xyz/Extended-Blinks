@@ -26,10 +26,12 @@ export default function Page() {
 	return (
 		<Fragment>
 			<div className="flex flex-col justify-center items-center text-xl text-center">
-				<span className="text-[#00CED1]">ONE STOP SHOP PROVIDER FOR</span>
-				<span className="text-white">CUSTOM CRYPTO ALERTS</span>
-				<span className="text-[#00CED1]">AND EASY</span>
-				<span className="text-white">EXECUTION</span>
+				<p className="md:w-[30rem]">
+					<span className="text-[#00CED1]">ONE STOP SHOP PROVIDER FOR </span>
+					<span className="text-white">CUSTOM CRYPTO ALERTS </span>
+					<span className="text-[#00CED1]">AND EASY </span>
+					<span className="text-white">EXECUTION</span>
+				</p>
 			</div>
 			<div className="flex flex-col md:flex-row h-full gap-12 py-10 justify-center items-center px-5">
 				<div className="flex flex-col text-center">
@@ -114,10 +116,12 @@ export default function Page() {
 					BLINK
 				</p>
 			</div>
-			<div className="flex flex-col gap-5 text-center items-center mt-[40px]">
-				<span className="text-[#00CED1]">COMING SOON</span>
+			<div className="flex flex-col gap-5 text-center items-center mt-[25px]">
+				<span className="text-2xl font-semibold text-[#00CED1]">
+					COMING SOON
+				</span>
 			</div>
-			<div className="flex flex-col gap-5 text-center items-center mt-[40px]">
+			<div className="flex flex-col gap-5 text-center items-center mt-[25px] mb-[25px]">
 				<a
 					type="button"
 					href="https://docs.google.com/forms/d/e/1FAIpQLSfvzQslsbyG6G_-nuy6X61pIEE647RbEoProtxUrbY5xHzcyw/viewform?usp=sf_link"
