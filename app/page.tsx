@@ -33,7 +33,7 @@ export default function Page() {
 					<span className="text-white">EXECUTION</span>
 				</p>
 			</div>
-			<div className="flex flex-col md:flex-row h-full gap-12 py-10 justify-center items-center px-5">
+			<div className="flex flex-col md:flex-row h-full gap-12 py-10 justify-center items-center flex-wrap">
 				<div className="flex flex-col text-center">
 					<span className="text-white">SELECT AN APP</span>
 					<div className="flex flex-col justify-between items-center gap-5 px-5 py-5 mt-5 h-[332px] w-80 md:w-92 border-solid border-2 border-light-white rounded-lg bg-[#837e7e]">
