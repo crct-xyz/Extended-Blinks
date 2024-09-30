@@ -6,12 +6,14 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": []
+		"include": ["app/**/*.tsx"],
+		"ignore": ["node_modules", "**/node_modules/**", "dist", "bin"],
+		"ignoreUnknown": true
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "tab",
+		"include": ["app/**/*.tsx"]
 	},
 	"organizeImports": {
 		"enabled": true
