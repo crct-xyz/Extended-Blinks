@@ -52,17 +52,20 @@ export const GET = async (req: Request) => {
 		links: {
 			actions: [
 				{
-					label: "Add member",
-					href: `/api/actions/squad/config?address=${multisigAddress}&action=add`,
-				},
+          label: "Add member",
+          href: `/api/actions/squad/config?address=${multisigAddress}&action=add`,
+          type: "transaction"
+        },
 				{
-					label: "Remove member",
-					href: `/api/actions/squad/config?address=${multisigAddress}&action=remove`,
-				},
+          label: "Remove member",
+          href: `/api/actions/squad/config?address=${multisigAddress}&action=remove`,
+          type: "transaction"
+        },
 				{
-					label: "Change threshold",
-					href: `/api/actions/squad/config?address=${multisigAddress}&action=change`,
-				},
+          label: "Change threshold",
+          href: `/api/actions/squad/config?address=${multisigAddress}&action=change`,
+          type: "transaction"
+        },
 			],
 		},
 	};
