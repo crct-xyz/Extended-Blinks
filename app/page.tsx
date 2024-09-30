@@ -179,7 +179,7 @@ export default function Page() {
                     href="https://docs.google.com/forms/d/e/1FAIpQLSfvzQslsbyG6G_-nuy6X61pIEE647RbEoProtxUrbY5xHzcyw/viewform?usp=sf_link"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-black bg-[#00CED1] rounded-xl p-3 w-full"
+                    className="text-black bg-[#00CED1] rounded-xl p-3 w-full md:w-80"
                 >
                     JOIN THE WAITLIST
                 </a>
