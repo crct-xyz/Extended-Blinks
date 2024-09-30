@@ -48,7 +48,9 @@ export default function Page() {
                         >
                             <JupyterIcon />
                         </button>
-                        <button type="button">{/* <TensorIcon /> */}</button>
+                        <button type="button">
+                          <TensorIcon />
+                        </button>
                     </div>
                 </div>
                 <div className="flex flex-col text-center">
