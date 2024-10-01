@@ -25,10 +25,21 @@ export default function Page() {
 
     return (
         <Fragment>
+            <div className="flex flex-col gap-5 text-center items-center mt-[25px] mb-[25px]">
+                <a
+                    type="button"
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSfvzQslsbyG6G_-nuy6X61pIEE647RbEoProtxUrbY5xHzcyw/viewform?usp=sf_link"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-black bg-[#00CED1] rounded-xl p-3 w-full md:w-80"
+                >
+                    JOIN THE WAITLIST
+                </a>
+            </div>
             <div className="flex flex-col justify-center items-center text-xl text-center">
                 <p className="md:w-[30rem]">
                     <span className="text-[#00CED1]">
-                        ONE STOP SHOP PROVIDER FOR
+                        ONE STOP SHOP PROVIDER FOR&nbsp;
                     </span>
                     <span className="text-white">CUSTOM CRYPTO ALERTS </span>
                     <span className="text-[#00CED1]">AND EASY </span>
@@ -150,7 +161,7 @@ export default function Page() {
             </div>
             <div className="flex flex-col gap-5 text-center items-center">
                 <p className="text-white">
-                    1. YOU SET UP YOUR
+                    1. YOU SET UP YOUR&nbsp;
                     <span className="text-[#00CED1]">USE CASE</span>
                 </p>
                 <p className="text-white">
@@ -159,12 +170,12 @@ export default function Page() {
                     THE TRIGGER IS PULLED
                 </p>
                 <p className="text-white">
-                    3. WE <span className="text-[#00CED1]">SEND</span>THE
+                    3. WE <span className="text-[#00CED1]">SEND&nbsp;</span>THE
                     EXECUTABLE <span className="text-[#00CED1]">TX TO YOU</span>
                 </p>
                 <p className="text-white">
                     4. YOU
-                    <span className="text-[#00CED1]">EXECUTE YOUR TX</span>WITH
+                    <span className="text-[#00CED1]">&nbsp;EXECUTE YOUR TX&nbsp;</span>WITH
                     A BLINK
                 </p>
             </div>
@@ -172,17 +183,6 @@ export default function Page() {
                 <span className="text-2xl font-semibold text-[#00CED1]">
                     COMING SOON
                 </span>
-            </div>
-            <div className="flex flex-col gap-5 text-center items-center mt-[25px] mb-[25px]">
-                <a
-                    type="button"
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSfvzQslsbyG6G_-nuy6X61pIEE647RbEoProtxUrbY5xHzcyw/viewform?usp=sf_link"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-black bg-[#00CED1] rounded-xl p-3 w-full md:w-80"
-                >
-                    JOIN THE WAITLIST
-                </a>
             </div>
         </Fragment>
     )
