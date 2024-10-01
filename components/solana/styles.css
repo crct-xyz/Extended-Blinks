@@ -3,6 +3,7 @@
 	border-radius: 35px !important;
 	padding: 12px;
 	width: 170px;
+  display: none;
 
 	@media (max-width: 500px) {
 		padding: 5px;
