@@ -7,6 +7,11 @@ import {
     ConnectionProvider,
     WalletProvider,
 } from '@solana/wallet-adapter-react'
+import {
+    PhantomWalletAdapter,
+    SolflareWalletAdapter,
+    MathWalletAdapter,
+} from '@solana/wallet-adapter-wallets'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { type ReactNode, useCallback, useMemo } from 'react'
 import { useCluster } from '../cluster/cluster-data-access'
@@ -27,10 +32,19 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         console.error(error)
     }, [])
 
+    const wallets = useMemo(
+        () => [
+            new SolflareWalletAdapter(),
+            new PhantomWalletAdapter(),
+            new MathWalletAdapter(),
+        ],
+        []
+    )
+
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider
-                wallets={[]}
+                wallets={wallets}
                 onError={onError}
                 autoConnect={true}
             >
