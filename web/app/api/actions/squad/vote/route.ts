@@ -60,7 +60,7 @@ export const GET = async (req: Request) => {
 
   const payload: ActionGetResponse = {
     title: `${metadata.name}`,
-    icon: `https://ucarecdn.com/cd7953a1-85aa-4ad1-b266-cd442e2641d9/-/preview/1030x1030/`,
+    icon: 'https://ucarecdn.com/7aa46c85-08a4-4bc7-9376-88ec48bb1f43/-/preview/880x864/-/quality/smart/-/format/auto/',
     description: `Enter a transaction number for which you want to cast your vote
     Latest transaction: ${multisigAccount.transactionIndex}`,
     label: 'squads',
@@ -122,25 +122,10 @@ export const POST = async (req: Request) => {
     multisigPda,
     transactionIndex: BigInt(transactionNumber),
   });
-  console.log('proposalpda: ', proposalPda);
-  console.log(transactionDetails.message.instructions);
   const proposalInfo = await multisig.accounts.Proposal.fromAccountAddress(
     connection,
     proposalPda
   );
-  
-  console.log("transaction dets: ",transactionDetails);
-
-  const instruction = transactionDetails
-  console.log("instructions: ", instruction);
-
-  console.log("program id: ", SystemProgram.programId);
-  
-  const signatures = await connection.getSignaturesForAddress(multisigPda, {
-    limit: 5,
-  });
-  console.log("signatures: ", signatures)
-  
 
   const creator = transactionDetails.creator;
   const receiver = transactionDetails.message.accountKeys.map((key) =>

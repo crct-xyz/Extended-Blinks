@@ -1,4 +1,5 @@
 "use client";
+import { DialectNotificationComponent } from '@/components/DialectNotificationComponent/DialectNotificationComponent';
 import React, { useState, FormEvent } from 'react';
 
 export default function Page() {
@@ -26,6 +27,8 @@ export default function Page() {
       <a href={`https://dial.to/?action=solana-action%3A${baseUrl}/api/actions/squad/vote?address=${address}`}>vote on a given transaction</a>
 
       <a href="/bot">bot</a>
+
+      <DialectNotificationComponent/>
     </div>
   )
 }

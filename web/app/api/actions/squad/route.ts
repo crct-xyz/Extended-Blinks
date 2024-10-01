@@ -22,6 +22,63 @@ import {
   TransactionMessage,
 } from '@solana/web3.js';
 import * as multisig from '../../../../../node_modules/@sqds/multisig/lib/index';
+import AWS from 'aws-sdk';
+
+const sqs = new AWS.SQS({ region: "eu-central-1" });
+const queueUrl = "https://sqs.eu-central-1.amazonaws.com/816069166828/action-builder-q";
+
+const params : AWS.SQS.ReceiveMessageRequest = {
+  QueueUrl: queueUrl,
+  MaxNumberOfMessages: 10,
+  WaitTimeSeconds: 5
+};
+
+async function receiveMessages(): Promise<void> {
+  try {
+    const data: AWS.SQS.ReceiveMessageResult = await sqs.receiveMessage(params).promise();
+
+    // Check if messages were received
+    if (data.Messages && data.Messages.length > 0) {
+      console.log("Received messages:", data.Messages);
+
+      // Process each message
+      data.Messages.forEach((message) => {
+        if (message.Body) {
+          console.log("Message ID:", message.MessageId);
+          console.log("Message Body:", message.Body);
+
+          // Process the message here (e.g., parse it, store it in a DB, etc.)
+          const payload = JSON.parse(message.Body);
+          console.log("Payload:", payload);
+
+          // Optionally delete the message from the queue after processing
+          if (message.ReceiptHandle) {
+            const deleteParams: AWS.SQS.DeleteMessageRequest = {
+              QueueUrl: queueUrl,
+              ReceiptHandle: message.ReceiptHandle,
+            };
+
+            sqs.deleteMessage(deleteParams, (err, deleteData) => {
+              if (err) {
+                console.error("Error deleting message", err);
+              } else {
+                console.log("Message deleted:", message.MessageId);
+              }
+            });
+          }
+        }
+      });
+    } else {
+      console.log("No messages found.");
+    }
+  } catch (err) {
+    console.error("Error receiving messages:", err);
+  }
+}
+
+// Call the function to receive messages
+receiveMessages();
+
 
 async function validatedQueryParams(requestUrl: URL) {
   let multisigAddress = '';
@@ -64,7 +121,7 @@ export const GET = async (req: Request) => {
 
   const payload: ActionGetResponse = {
     title: `${metadata.name}`,
-    icon: `https://ucarecdn.com/7ae08282-2d17-4025-8206-8991c0a5865d/-/preview/1030x1030/`,
+    icon: 'https://ucarecdn.com/914284ad-6250-43a4-89dc-20e3d5a78c6e/-/preview/1000x1000/',
     description: `send money brokie`,
     label: 'squads',
     links: {
@@ -161,7 +218,7 @@ export const POST = async (req: Request) => {
           action: {
             type: "action",
             title: `${metadata.name}`,
-            icon: `https://ucarecdn.com/7ae08282-2d17-4025-8206-8991c0a5865d/-/preview/1030x1030/`,
+            icon: 'https://ucarecdn.com/914284ad-6250-43a4-89dc-20e3d5a78c6e/-/preview/1000x1000/',
             description: `vote on transaction number ${finalTxnIndex}`,
             label: "squads",
             links: {
