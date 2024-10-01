@@ -48,7 +48,7 @@ export function UiLayout({
             <footer className="flex h-[70px] justify-center">
                 <SocialIcon
                     url="https://x.com"
-                    href="https://x.com/squint_sol/"
+                    href="https://x.com/crct_xyz/"
                     target="_blank"
                 />
             </footer>
