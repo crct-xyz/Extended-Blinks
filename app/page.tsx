@@ -103,7 +103,7 @@ export default function Page() {
                     </div>
                 </div>
                 <div className="flex flex-col text-center">
-                    <span className="text-white">SELECT AN APP</span>
+                    <span className="text-white">SET YOUR CUSTOM TRIGGER</span>
                     <div className="md:w-92 border-light-white mt-5 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                         <button
                             type="button"
