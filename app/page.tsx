@@ -56,7 +56,7 @@ export default function Page() {
                     </div>
                 </div>
                 <div className="flex flex-col text-center">
-                    <span className="text-white">CHOOSE YOUR USE CASE</span>
+                    <span className="text-white">CHOOSE YOUR ACTION</span>
                     <div className="md:w-92 border-light-white mt-5 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                         <button
                             type="button"
@@ -153,7 +153,7 @@ export default function Page() {
             <div className="flex flex-col items-center gap-5 text-center">
                 <p className="text-white">
                     1. YOU SET UP YOUR&nbsp;
-                    <span className="text-[#00CED1]">USE CASE</span>
+                    <span className="text-[#00CED1]">ACTION</span>
                 </p>
                 <p className="text-white">
                     2. WE
