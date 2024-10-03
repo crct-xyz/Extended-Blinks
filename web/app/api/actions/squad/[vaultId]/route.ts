@@ -9,6 +9,7 @@ import {
   ActionPostRequest,
   ActionPostResponse,
   createPostResponse,
+  NextActionLink,
 } from '@solana/actions';
 import {
   clusterApiUrl,
@@ -86,6 +87,7 @@ export const POST = async (
       multisigPda
     );
     const txnIndex = multisigInfo.transactionIndex;
+    const newTxnIndex = Number(txnIndex) + 1;
 
     let finalTxnIndex;
     if (txnIndexForChecking && txnIndexForChecking != 0) {
@@ -198,16 +200,18 @@ export const POST = async (
         programId: multisig.PROGRAM_ID,
       });
       transaction.add(instructionProposalCreate).add(instruction);
-      console.log("somethiung")
+      console.log('somethiung');
     }
     if (action == 'execute') {
-      console.log("ahhaahah")
-      const instruction = (await multisig.instructions.vaultTransactionExecute({
-        connection,
-        multisigPda,
-        transactionIndex: BigInt(Number(txIndex)),
-        member: payerAccount,
-      })).instruction;
+      console.log('ahhaahah');
+      const instruction = (
+        await multisig.instructions.vaultTransactionExecute({
+          connection,
+          multisigPda,
+          transactionIndex: BigInt(Number(txIndex)),
+          member: payerAccount,
+        })
+      ).instruction;
       transaction.add(instruction);
     }
     if (action == 'reject') {
@@ -221,7 +225,7 @@ export const POST = async (
         multisigPda,
         transactionIndex: BigInt(Number(txIndex)),
         member: payerAccount,
-      })
+      });
       transaction.add(instructionProposalCreate).add(instruction);
     }
 
@@ -233,9 +237,83 @@ export const POST = async (
     let payload: ActionPostResponse = await createPostResponse({
       fields: {
         transaction,
-        message: `Transaction Successful`,
+        message: `${
+          action === 'approve'
+            ? 'Vote Approved'
+            : action === 'reject'
+            ? 'Rejected'
+            : action == 'approveandexecute'
+            ? 'Approved and Executed'
+            : `Vault Transaction ${txIndex} Finally Executed!`
+        }`,
+        ...(action == 'approve' || action == 'reject' || action == 'execute'
+          ? {}
+          : {
+              links: {
+                next: getVoteAction(action!, txIndex, multisg, requestUrl),
+              },
+            }),
       },
     });
+
+    function getVoteAction(
+      action: string,
+      txIndex: number,
+      multisg: string,
+      requestUrl: URL
+    ): NextActionLink {
+      const latestTxIndex = multisigInfo.transactionIndex;
+      console.log('multisig address: ', multisg);
+      let description = '',
+        label = 'Successful';
+      if (action == 'add') {
+        description = `voting for Transaction #${newTxnIndex}`;
+        label = 'Voting Successful';
+      }
+      if (action == 'execute') {
+        description = `Successfully executed Vault Transaction #${txIndex}`;
+        label = 'Executed';
+      }
+      if (action == 'reject') {
+        description = `Rejected Transaction #${txIndex}`;
+        label = 'Rejected';
+      }
+      if (action == 'approveandexecute') {
+        description = `Successfully Approved and Executed Vault Transaction #${txIndex}`;
+        label = 'Approved and Executed';
+      }
+
+      const baseHref = new URL(
+        `/api/actions/squad/${multisg}`,
+        requestUrl.origin
+      ).toString();
+      return {
+        type: 'inline',
+        action: {
+          description: description,
+          icon: 'https://ucarecdn.com/914284ad-6250-43a4-89dc-20e3d5a78c6e/-/preview/1000x1000/',
+          label: label,
+          title: `Action Complete!`,
+          type: 'action',
+          links: {
+            actions: [
+              {
+                label: 'Approve',
+                href: `${baseHref}?action=approve&multisigAddress=${multisg}&txIndex=${newTxnIndex}`,
+              },
+              {
+                label: 'Reject',
+                href: `${baseHref}?action=reject&multisigAddress=${multisg}&txIndex=${newTxnIndex} `,
+              },
+              {
+                label: 'Execute',
+                href: `${baseHref}?action=execute&multisigAddress=${multisg}&txIndex=${newTxnIndex}`,
+              },
+            ],
+          },
+        },
+      };
+    }
 
     return Response.json(payload, {
       headers: ACTIONS_CORS_HEADERS,
