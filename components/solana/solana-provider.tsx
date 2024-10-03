@@ -50,21 +50,26 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     }, [])
 
     useEffect(() => {
-        axios
-            .post(
-                'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
-                {
-                    user_id: uuidv4(),
-                    wallet_type: 'string',
-                    wallet: publicAddress,
-                }
-            )
-            .then(function (response) {
-                console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
+        if (publicAddress) {
+            axios
+                .post(
+                    'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
+                    {
+                        user_id: uuidv4(),
+                        wallet_name: 'solana',
+                        wallet_public_key: publicAddress,
+                    }
+                )
+                .then(function (response) {
+                    console.log('exito')
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log('error')
+                    console.log(error)
+                })
+        }
+        // console.log('publicAddress', publicAddress)
     }, [publicAddress])
 
     const wallets = useMemo(
