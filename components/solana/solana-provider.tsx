@@ -1,20 +1,23 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import axios, { isCancel, AxiosError } from 'axios'
 
 import type { WalletError } from '@solana/wallet-adapter-base'
 import {
     ConnectionProvider,
-    WalletProvider,
     useWallet,
-    useConnection,
+    WalletProvider,
 } from '@solana/wallet-adapter-react'
 import {
     PhantomWalletAdapter,
     SolflareWalletAdapter,
     MathWalletAdapter,
 } from '@solana/wallet-adapter-wallets'
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
+import {
+    WalletModalProvider,
+    useWalletModal,
+} from '@solana/wallet-adapter-react-ui'
 import {
     type ReactNode,
     useCallback,
@@ -22,9 +25,10 @@ import {
     useMemo,
     useState,
 } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { useCluster } from '../cluster/cluster-data-access'
-import { Connection, PublicKey } from '@solana/web3.js'
 
+import { Connection, PublicKey } from '@solana/web3.js'
 import './styles.css'
 
 require('@solana/wallet-adapter-react-ui/styles.css')
@@ -37,11 +41,31 @@ export const WalletButton = dynamic(
 
 export function SolanaProvider({ children }: { children: ReactNode }) {
     const [publicAddress, setPublicAddress] = useState('')
+    const { wallet } = useWallet()
+    console.log('wallet', wallet)
     const { cluster } = useCluster()
     const endpoint = useMemo(() => cluster.endpoint, [cluster])
     const onError = useCallback((error: WalletError) => {
         console.error(error)
     }, [])
+
+    useEffect(() => {
+        axios
+            .post(
+                'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
+                {
+                    user_id: uuidv4(),
+                    wallet_type: 'string',
+                    wallet: publicAddress,
+                }
+            )
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }, [publicAddress])
 
     const wallets = useMemo(
         () => [
@@ -84,7 +108,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             setPublicAddress(publicaddress)
         }
         returnPubKey()
-    }, [])
+    }, [publicAddress])
 
     return (
         <ConnectionProvider endpoint={endpoint}>
