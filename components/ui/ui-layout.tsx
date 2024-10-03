@@ -33,7 +33,7 @@ export function UiLayout({
             <ClusterChecker>
                 <AccountChecker />
             </ClusterChecker>
-            <div className="flex flex-col px-5 pt-5 md:w-full">
+            <div className="flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
                 <Suspense
                     fallback={
                         <div className="my-32 text-center">
