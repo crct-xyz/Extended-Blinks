@@ -12,6 +12,7 @@ import { AccountChecker } from '../account/account-ui'
 import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
+import ButtonAnimation from 'components/button-animation/button-animation'
 
 const orbitron = Orbitron({ subsets: ['latin'] })
 
@@ -46,6 +47,7 @@ export function UiLayout({
                 <Toaster position="bottom-right" />
             </div>
             <footer className="flex h-[70px] justify-center">
+                <ButtonAnimation>BOTOON</ButtonAnimation>
                 <SocialIcon
                     url="https://x.com"
                     href="https://x.com/crct_xyz/"
