@@ -50,31 +50,59 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     }, [])
 
     const headers = {
-        Accept: 'application/json',
+        accept: 'application/json',
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
     }
+    const data = {
+        user_id: uuidv4(),
+        wallet_name: 'solana',
+        wallet_public_key: publicAddress,
+    }
+
+    // useEffect(() => {
+    //     fetch(
+    //         'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
+    //         {
+    //             method: 'POST',
+    //             mode: 'no-cors',
+    //             headers: {
+    //                 accept: 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(data),
+    //         }
+    //     )
+    //         .then((response) => response.json())
+    //         .then((data) => console.log(data))
+    //         .catch((error) => console.error(error))
+    // }, [publicAddress])
 
     useEffect(() => {
         const callFunc = async () => {
             if (publicAddress) {
-                await axios
-                    .post(
-                        'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
-                        {
-                            user_id: uuidv4(),
-                            wallet_name: 'solana',
-                            wallet_public_key: publicAddress,
-                        },
-                        { headers: headers }
-                    )
-                    .then(function (response) {
-                        console.log('exito')
-                        console.log(response)
-                    })
-                    .catch(function (error) {
-                        console.log('error')
-                        console.log(error)
-                    })
+                try {
+                    await axios
+                        .post(
+                            'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
+                            {
+                                user_id: uuidv4(),
+                                wallet_name: 'solana',
+                                wallet_public_key: publicAddress,
+                            }
+                            // { headers: headers }
+                        )
+                        .then(function (response) {
+                            console.log('exito')
+                            console.log(response)
+                        })
+                        .catch(function (error) {
+                            console.log('error')
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log('error', error)
+                }
             }
             return null
         }
