@@ -96,7 +96,7 @@ export default function Page() {
                         </button>
                         <button
                             type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
+                            className="rounded-lg bg-[#D9D9D9] px-2"
                         >
                             REMOVE MEMBER
                         </button>
