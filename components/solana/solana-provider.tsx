@@ -50,7 +50,6 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
                         .post(
                             'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
                             {
-                                is_registered: true,
                                 wallet_public_key: publicAddress,
                             }
                         )
