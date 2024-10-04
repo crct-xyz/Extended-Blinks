@@ -43,15 +43,14 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
     }, [])
 
     useEffect(() => {
-        const callFunc = async () => {
+        const getUser = async () => {
             if (publicAddress) {
                 try {
                     await axios
                         .post(
                             'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
                             {
-                                user_id: publicAddress,
-                                wallet_name: 'solana',
+                                is_registered: true,
                                 wallet_public_key: publicAddress,
                             }
                         )
@@ -67,7 +66,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             }
             return null
         }
-        callFunc()
+        getUser()
     }, [publicAddress])
 
     const wallets = useMemo(
