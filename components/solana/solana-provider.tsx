@@ -47,11 +47,8 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             if (publicAddress) {
                 try {
                     await axios
-                        .post(
-                            'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/',
-                            {
-                                wallet_public_key: publicAddress,
-                            }
+                        .get(
+                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicAddress}`
                         )
                         .then(function (response) {
                             console.log(response)
