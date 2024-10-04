@@ -23,17 +23,40 @@ import {
 } from '@solana/web3.js';
 import * as multisig from '../../../../../node_modules/@sqds/multisig/lib/index';
 import AWS from 'aws-sdk';
+import axios from 'axios';
 
 const sqs = new AWS.SQS({ region: 'eu-central-1' });
 const queueUrl =
   'https://sqs.eu-central-1.amazonaws.com/816069166828/action-builder-q';
+  const notificationQueueUrl = 'https://sqs.eu-central-1.amazonaws.com/816069166828/NotificationQueue';
+const dbUrl = 'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/telegram/'
+const response = await axios.get(dbUrl);
+// const telegram_user = response.data.telegram_user
 
 const params: AWS.SQS.ReceiveMessageRequest = {
   QueueUrl: queueUrl,
-  MaxNumberOfMessages: 10,
-  WaitTimeSeconds: 5,
+  MaxNumberOfMessages: 1,
 };
 let receivedPayload: any = null;
+
+const sendData = {
+  blinkUrl: 'http://localhost:3000/api/actions/test',
+  telegram_user: 'aarsho'
+}
+
+async function sendToSQS() {
+  const sendParams = {
+    MessageBody: JSON.stringify({ sendData }),
+    QueueUrl: notificationQueueUrl,
+  };
+
+  try {
+    const result = await sqs.sendMessage(sendParams).promise();
+    console.log("Message sent to SQS:", result);
+  } catch (error) {
+    console.error("Error sending message to SQS:", error);
+  }
+}
 
 async function receiveMessages(): Promise<void> {
   try {
@@ -83,6 +106,7 @@ async function receiveMessages(): Promise<void> {
 
 export const GET = async (req: Request) => {
   await receiveMessages();
+  await sendToSQS();
   console.log(receivedPayload);
   const payload: ActionGetResponse = receivedPayload || {
     title: `something`,

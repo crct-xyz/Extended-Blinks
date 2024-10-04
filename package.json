@@ -33,6 +33,7 @@
     "@types/node-telegram-bot-api": "^0.64.7",
     "@uploadcare/nextjs-loader": "^1.0.0",
     "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
     "bs58": "5.0.0",
     "buffer": "6.0.3",
     "daisyui": "4.11.1",
