@@ -128,9 +128,9 @@ export const POST = async (req: Request) => {
   );
 
   const creator = transactionDetails.creator;
-  const receiver = transactionDetails.message.accountKeys.map((key) =>
-    key.toBase58()
-  );
+  // const receiver = transactionDetails.message.accountKeys.map((key) =>
+  //   key.toBase58()
+  // );
   const baseHref = new URL(
     `/api/actions/squad/${multisigAddress}`,
     requestUrl.origin
@@ -163,9 +163,9 @@ export const POST = async (req: Request) => {
           type: 'inline',
           action: {
             title: `${metadata.name}`,
-            description: `Transaction ${transactionNumber}\nCreator: ${creator}\nReceiver: ${receiver[1]}`,
+            description: `Transaction ${transactionNumber}\nCreator: ${creator}}`,
             label: 'squads',
-            icon: `https://ucarecdn.com/3ed03926-de6c-4aa3-bbea-5a948fc20ae4/-/preview/1030x1030/`,
+            icon: 'https://ucarecdn.com/7aa46c85-08a4-4bc7-9376-88ec48bb1f43/-/preview/880x864/-/quality/smart/-/format/auto/',
             type: 'action',
             links: {
               actions: [
@@ -188,5 +188,6 @@ export const POST = async (req: Request) => {
       },
     },
   });
+  console.log("transaction number: ", transactionNumber)
   return Response.json(payload, { headers: ACTIONS_CORS_HEADERS });
 };

@@ -96,6 +96,7 @@ export const POST = async (
       finalTxnIndex = Number(multisigInfo.transactionIndex) + 1;
     }
 
+
     if (action == 'send') {
       const transferInstruction = SystemProgram.transfer({
         fromPubkey: vault_account,
@@ -227,6 +228,7 @@ export const POST = async (
         member: payerAccount,
       });
       transaction.add(instructionProposalCreate).add(instruction);
+      console.log("some")
     }
 
     transaction.feePayer = payerAccount;

@@ -106,7 +106,7 @@ async function receiveMessages(): Promise<void> {
 
 export const GET = async (req: Request) => {
   await receiveMessages();
-  await sendToSQS();
+  // await sendToSQS();
   console.log(receivedPayload);
   const payload: ActionGetResponse = receivedPayload || {
     title: `something`,
@@ -117,7 +117,7 @@ export const GET = async (req: Request) => {
       actions: [
         {
           label: 'Send',
-          href: `/api/actions/squad?address=&action=send&amount={sendAmount}&wallet={wallet}`,
+          href: `/api/actions/squad?address=Gr5FaqkMmypxUJfADQsoYN3moknprc5LzMF2qh3SiP8m&action=send&amount={sendAmount}&wallet={wallet}`,
           parameters: [
             {
               name: 'sendAmount',
