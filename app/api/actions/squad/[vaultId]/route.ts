@@ -296,6 +296,7 @@ export const POST = async (
     ).blockhash;
 
     let payload: ActionPostResponse = await createPostResponse({
+      //@ts-ignore
       fields: {
         transaction,
         message: `${
