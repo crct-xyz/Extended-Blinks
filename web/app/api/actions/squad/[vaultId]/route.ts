@@ -96,6 +96,45 @@ export const POST = async (
       finalTxnIndex = Number(multisigInfo.transactionIndex) + 1;
     }
 
+    const [proposalPda] = multisig.getProposalPda({
+      multisigPda,
+      transactionIndex: BigInt(txIndex),
+    });
+    let proposalInfo;
+    try {
+      proposalInfo = await multisig.accounts.Proposal.fromAccountAddress(
+        connection,
+        proposalPda
+      );
+    } catch (error) {
+      proposalInfo = null
+    }
+    // const proposalInfo = await multisig.accounts.Proposal.fromAccountAddress(
+    //   connection,
+    //   proposalPda
+    // );
+
+    // const proposalStatus = proposalInfo?.status.__kind || "None";
+    //       console.log("INITAL status:", proposalStatus)
+    //       if(proposalStatus === "None"){
+    //         console.log("helo")
+    //         transaction.add(
+    //           multisig.instructions.proposalCreate({
+    //             multisigPda,
+    //             creator: payerAccount,
+    //             transactionIndex: BigInt(txIndex),
+    //           })
+    //         )
+    //       }
+    //       if(proposalStatus === "Draft"){
+    //           transaction.add(
+    //             multisig.instructions.proposalActivate({
+    //               multisigPda,
+    //               transactionIndex: BigInt(txIndex),
+    //               member: payerAccount
+    //             })
+    //           )
+    //       }
 
     if (action == 'send') {
       const transferInstruction = SystemProgram.transfer({
@@ -188,19 +227,29 @@ export const POST = async (
       );
     }
     if (action == 'approve') {
-      const instructionProposalCreate = multisig.instructions.proposalCreate({
-        multisigPda,
-        creator: payerAccount,
-        rentPayer: payerAccount,
-        transactionIndex: BigInt(Number(txIndex)),
-      });
-      const instruction = multisig.instructions.proposalApprove({
-        multisigPda,
-        transactionIndex: BigInt(Number(txIndex)),
-        member: payerAccount,
-        programId: multisig.PROGRAM_ID,
-      });
-      transaction.add(instructionProposalCreate).add(instruction);
+      if (proposalInfo?.status.__kind == 'Active') {
+        const instruction = multisig.instructions.proposalApprove({
+          multisigPda,
+          transactionIndex: BigInt(Number(txIndex)),
+          member: payerAccount,
+          programId: multisig.PROGRAM_ID,
+        });
+        transaction.add(instruction);
+      }
+      else {
+        const instructionProposalCreate = multisig.instructions.proposalCreate({
+          multisigPda,
+          creator: payerAccount,
+          rentPayer: payerAccount,
+          transactionIndex: BigInt(Number(txIndex)),
+        });
+        const instruction = multisig.instructions.proposalApprove({
+          multisigPda,
+          transactionIndex: BigInt(Number(txIndex)),
+          member: payerAccount,
+        });
+        transaction.add(instructionProposalCreate).add(instruction);
+      }
       console.log('somethiung');
     }
     if (action == 'execute') {
@@ -216,19 +265,29 @@ export const POST = async (
       transaction.add(instruction);
     }
     if (action == 'reject') {
-      const instructionProposalCreate = multisig.instructions.proposalCreate({
-        multisigPda,
-        creator: payerAccount,
-        rentPayer: payerAccount,
-        transactionIndex: BigInt(Number(txIndex)),
-      });
-      const instruction = multisig.instructions.proposalReject({
-        multisigPda,
-        transactionIndex: BigInt(Number(txIndex)),
-        member: payerAccount,
-      });
-      transaction.add(instructionProposalCreate).add(instruction);
-      console.log("some")
+      if (proposalInfo?.status.__kind == 'Active') {
+        const instruction = multisig.instructions.proposalReject({
+          multisigPda,
+          transactionIndex: BigInt(Number(txIndex)),
+          member: payerAccount,
+        });
+        transaction.add(instruction);
+      }
+      else {
+        const instructionProposalCreate = multisig.instructions.proposalCreate({
+          multisigPda,
+          creator: payerAccount,
+          rentPayer: payerAccount,
+          transactionIndex: BigInt(Number(txIndex)),
+        });
+        const instruction = multisig.instructions.proposalReject({
+          multisigPda,
+          transactionIndex: BigInt(Number(txIndex)),
+          member: payerAccount,
+        });
+        transaction.add(instructionProposalCreate).add(instruction);
+      }
+      console.log('some');
     }
 
     transaction.feePayer = payerAccount;
