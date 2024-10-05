@@ -38,8 +38,9 @@ const RegistrationComp = ({
                             <div className="flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] p-6 text-center">
                                 <SocialIcon
                                     url="https://telegram.com"
-                                    href="https://telegram.com/"
-                                    target="_blank"
+                                    href="#"
+                                    // target="_blank"
+                                    rel="noopener noreferrer"
                                 />
                                 <div className="flex flex-col gap-3 text-start">
                                     <label htmlFor="telegram">Telegram</label>
