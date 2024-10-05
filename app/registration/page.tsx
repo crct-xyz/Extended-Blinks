@@ -1,7 +1,7 @@
 import RegistrationComp from 'components/registration/registration'
 
 const Registration = () => {
-    return <RegistrationComp />
+    return <div>hello</div>
 }
 
 export default Registration
