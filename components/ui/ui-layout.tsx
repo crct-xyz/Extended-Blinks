@@ -28,6 +28,23 @@ export function UiLayout({
     const [value, setValue, removeValue] = useSessionStorage('is-registered', 0)
     const router = useRouter()
 
+    const handleRegistration = async (telegramUser: string) => {
+        try {
+            await axios
+                .post(
+                    'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users',
+                    {
+                        wallet_public_key: publicKey,
+                        telegram_username: telegramUser,
+                    }
+                )
+                .then((res) => setIsRegistered(res.data.is_registered))
+            // router.push('/order-page')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     useEffect(() => {
         if (!connected) {
             router.push('/')
@@ -89,7 +106,11 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {!isRegistered ? <RegistrationComp /> : null}
+                    {!isRegistered ? (
+                        <RegistrationComp
+                            handleRegistration={handleRegistration}
+                        />
+                    ) : null}
                     {children}
                 </Suspense>
                 <Toaster position="bottom-right" />

@@ -8,25 +8,15 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SocialIcon } from 'react-social-icons'
 
-const RegistrationComp = () => {
+const RegistrationComp = ({
+    handleRegistration,
+}: {
+    handleRegistration: (telegramUsername: string) => void
+}) => {
     const [open, setOpen] = useState(true)
-    const [setTelegramUsername, setsetTelegramUsername] = useState('' as string)
+    const [telegramUsername, setTelegramUsername] = useState('' as string)
     const { wallet, publicKey } = useWallet()
     const router = useRouter()
-    const handleRegistration = async () => {
-        try {
-            await axios.post(
-                'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users',
-                {
-                    wallet_public_key: publicKey,
-                    telegram_username: setTelegramUsername,
-                }
-            )
-            router.push('/orderPAge')
-        } catch (error) {
-            console.error(error)
-        }
-    }
 
     return (
         <Dialog
@@ -60,15 +50,15 @@ const RegistrationComp = () => {
                                         placeholder="Enter your Telegram handle"
                                         className="rounded-md px-1 placeholder:p-2 placeholder:text-black"
                                         onChange={(e) =>
-                                            setsetTelegramUsername(
-                                                e.target.value
-                                            )
+                                            setTelegramUsername(e.target.value)
                                         }
                                     />
                                 </div>
                                 <button
                                     className="animate-bounce rounded-lg bg-[#00CED1]"
-                                    onClick={handleRegistration}
+                                    onClick={() =>
+                                        handleRegistration(telegramUsername)
+                                    }
                                 >
                                     REGISTER
                                 </button>
