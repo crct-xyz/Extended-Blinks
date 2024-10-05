@@ -52,7 +52,6 @@ export function UiLayout({
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
             <div className="navbar bg-base-300 text-neutral-content border-light-white flex flex-row items-center justify-between rounded-xl border-2 border-solid px-2 py-2 md:px-10">
                 <LogoIcon />
-                <div className="text-white">{isRegistered?.toString()}</div>
                 <WalletButton />
             </div>
             <ClusterChecker>
