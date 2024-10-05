@@ -20,7 +20,7 @@ export function UiLayout({
     links: { label: string; path: string }[]
 }) {
     const { wallet, publicKey } = useWallet()
-    const [isRegistered, setIsRegistered] = React.useState<boolean>()
+    const [isRegistered, setIsRegistered] = React.useState<boolean>(true)
 
     console.log('isRegistered', isRegistered)
 
