@@ -24,10 +24,10 @@ export function UiLayout({
     links: { label: string; path: string }[]
 }) {
     const { wallet, publicKey, connected } = useWallet()
-    const [isRegistered, setIsRegistered] = React.useState<boolean>(true)
+    const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
     const [value, setValue, removeValue] = useSessionStorage('is-registered', 0)
     const router = useRouter()
-
+    console.log('isRegistered', isRegistered)
     const handleRegistration = async (telegramUser: string) => {
         try {
             await axios
@@ -49,6 +49,9 @@ export function UiLayout({
         if (!connected) {
             router.push('/')
         }
+        if (!isRegistered) {
+            router.push('/')
+        }
     }, [connected])
 
     useEffect(() => {
@@ -58,10 +61,10 @@ export function UiLayout({
     }, [connected])
 
     useEffect(() => {
-        if (connected && isRegistered) {
+        if (isRegistered) {
             router.push('/order-page')
         }
-    }, [connected, isRegistered])
+    }, [isRegistered])
 
     useEffect(() => {
         const getUser = async () => {
@@ -106,7 +109,7 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {!isRegistered ? (
+                    {connected && !isRegistered ? (
                         <RegistrationComp
                             handleRegistration={handleRegistration}
                         />
