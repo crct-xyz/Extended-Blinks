@@ -7,6 +7,7 @@ import type { WalletError } from '@solana/wallet-adapter-base'
 import {
     ConnectionProvider,
     WalletProvider,
+    useConnection,
 } from '@solana/wallet-adapter-react'
 import {
     PhantomWalletAdapter,
@@ -35,36 +36,15 @@ export const WalletButton = dynamic(
 
 export function SolanaProvider({ children }: { children: ReactNode }) {
     const [publicAddress, setPublicAddress] = useState('')
-
+    const [isRegistered, setIsRegistered] = useState<boolean>()
+    console.log('isRegistered', isRegistered)
+    const { connection } = useConnection()
     const { cluster } = useCluster()
     const endpoint = useMemo(() => cluster.endpoint, [cluster])
     const onError = useCallback((error: WalletError) => {
         console.error(error)
     }, [])
-
-    useEffect(() => {
-        const getUser = async () => {
-            if (publicAddress) {
-                try {
-                    await axios
-                        .get(
-                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicAddress}`
-                        )
-                        .then(function (response) {
-                            console.log(response)
-                        })
-                        .catch(function (error) {
-                            console.log(error)
-                        })
-                } catch (error) {
-                    console.log('error', error)
-                }
-            }
-            return null
-        }
-        getUser()
-    }, [publicAddress])
-
+    console.log('connection', connection)
     const wallets = useMemo(
         () => [
             new SolflareWalletAdapter(),
@@ -106,6 +86,30 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
             setPublicAddress(publicaddress)
         }
         returnPubKey()
+    }, [publicAddress])
+
+    useEffect(() => {
+        const getUser = async () => {
+            if (publicAddress) {
+                try {
+                    await axios
+                        .get(
+                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicAddress}`
+                        )
+                        .then(function (response) {
+                            setIsRegistered(response.data.is_registered)
+                            console.log(response)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log('error', error)
+                }
+            }
+            return null
+        }
+        getUser()
     }, [publicAddress])
 
     return (

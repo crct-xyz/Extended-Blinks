@@ -8,6 +8,7 @@
 	},
 	"private": true,
 	"dependencies": {
+		"@headlessui/react": "^2.1.9",
 		"@react-three/fiber": "^8.17.8",
 		"@solana-developers/preset-next": "3.0.1",
 		"@solana/actions": "^1.6.4",

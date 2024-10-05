@@ -5,25 +5,25 @@ import { Orbitron } from 'next/font/google'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { SocialIcon } from 'react-social-icons'
-
+import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { usePathname } from 'next/navigation'
 
 import { AccountChecker } from '../account/account-ui'
 import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
+import RegistrationComp from 'components/registration/registration'
 
 const orbitron = Orbitron({ subsets: ['latin'] })
 
 export function UiLayout({
     children,
-    links,
 }: {
     children: ReactNode
     links: { label: string; path: string }[]
 }) {
-    const pathname = usePathname()
-
+    const { wallet, publicKey } = useWallet()
+    console.log('publicKey', publicKey?.toString())
     return (
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
             <div className="navbar bg-base-300 text-neutral-content border-light-white flex flex-row items-center justify-between rounded-xl border-2 border-solid px-2 py-2 md:px-10">
@@ -41,7 +41,7 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {children}
+                    {false ? <RegistrationComp /> : children}
                 </Suspense>
                 <Toaster position="bottom-right" />
             </div>
