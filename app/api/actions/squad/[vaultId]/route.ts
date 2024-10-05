@@ -27,7 +27,7 @@ import {
   VersionedTransaction,
 } from '@solana/web3.js';
 //@ts-ignore
-import * as multisig from '../../../../../../node_modules/@sqds/multisig/lib/index';
+import * as multisig from '@sqds/multisig';
 
 let vault_account: PublicKey;
 let multisigPda: PublicKey;

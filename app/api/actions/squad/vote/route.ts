@@ -20,7 +20,7 @@ import {
   SystemInstruction,
 } from '@solana/web3.js';
 //@ts-ignore
-import * as multisig from '../../../../../../node_modules/@sqds/multisig/lib/index';
+import * as multisig from '@sqds/multisig';
 import { NextActionLink } from '@solana/actions-spec';
 import { decodeInstruction } from '@solana/spl-token';
 

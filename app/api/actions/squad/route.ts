@@ -21,7 +21,7 @@ import {
   LAMPORTS_PER_SOL,
   TransactionMessage,
 } from '@solana/web3.js';
-import * as multisig from '../../../../../node_modules/@sqds/multisig/lib/index';
+import * as multisig from '@sqds/multisig';
 import AWS from 'aws-sdk';
 
 const sqs = new AWS.SQS({ region: "eu-central-1" });
@@ -129,7 +129,7 @@ export const POST = async (req: Request) => {
     `/api/actions/squad/${multisigAddress}`,
     requestUrl.origin
   ).toString();
-  
+
   const txnIndex = multisigAccount.transactionIndex;
   const finalTxnIndex = Number(txnIndex) + 1;
   const transaction = new Transaction();
@@ -197,5 +197,5 @@ export const POST = async (req: Request) => {
   });
 
   return Response.json(payload, {headers: ACTIONS_CORS_HEADERS});
-  
+
 };
