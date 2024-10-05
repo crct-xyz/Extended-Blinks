@@ -11,13 +11,17 @@ const RegistrationComp = () => {
     const [setTelegramUsername, setsetTelegramUsername] = useState('' as string)
     const { wallet, publicKey } = useWallet()
     const handleRegistration = async () => {
-        await axios.post(
-            'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/preferences',
-            {
-                user_id: publicKey,
-                telegram_user: setTelegramUsername,
-            }
-        )
+        try {
+            await axios.post(
+                'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users',
+                {
+                    wallet_public_key: publicKey,
+                    telegram_username: setTelegramUsername,
+                }
+            )
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
