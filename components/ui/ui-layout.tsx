@@ -1,28 +1,52 @@
 'use client'
 
 import { WalletButton } from '../solana/solana-provider'
-import { Orbitron } from 'next/font/google'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { SocialIcon } from 'react-social-icons'
-
-import { usePathname } from 'next/navigation'
+import { useWallet } from '@solana/wallet-adapter-react'
+import axios from 'axios'
 
 import { AccountChecker } from '../account/account-ui'
 import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
-
-const orbitron = Orbitron({ subsets: ['latin'] })
+import RegistrationComp from 'components/registration/registration'
 
 export function UiLayout({
     children,
-    links,
 }: {
     children: ReactNode
     links: { label: string; path: string }[]
 }) {
-    const pathname = usePathname()
+    const { wallet, publicKey } = useWallet()
+    const [isRegistered, setIsRegistered] = React.useState<boolean>(true)
+
+    console.log('isRegistered', isRegistered)
+
+    useEffect(() => {
+        const getUser = async () => {
+            if (publicKey?.toString()) {
+                try {
+                    await axios
+                        .get(
+                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicKey?.toString()}`
+                        )
+                        .then(function (response) {
+                            setIsRegistered(response.data.is_registered)
+                            console.log(response)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log('error', error)
+                }
+            }
+            return null
+        }
+        getUser()
+    }, [publicKey?.toString()])
 
     return (
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
@@ -41,6 +65,7 @@ export function UiLayout({
                         </div>
                     }
                 >
+                    {!isRegistered ? <RegistrationComp /> : null}
                     {children}
                 </Suspense>
                 <Toaster position="bottom-right" />
