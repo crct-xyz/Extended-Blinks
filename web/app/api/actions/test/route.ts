@@ -75,9 +75,9 @@ async function receiveMessages(): Promise<void> {
           console.log('Message Body:', message.Body);
 
           // Process the message here (e.g., parse it, store it in a DB, etc.)
-          const payload = JSON.parse(message.Body);
-          console.log('Payload:', payload);
-          receivedPayload = payload.payload;
+          const parsedBody = JSON.parse(message.Body);
+          console.log('Payload:', parsedBody);
+          receivedPayload = parsedBody.payload;
 
           // Optionally delete the message from the queue after processing
           if (message.ReceiptHandle) {
