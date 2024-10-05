@@ -61,10 +61,10 @@ export function UiLayout({
     }, [connected])
 
     useEffect(() => {
-        if (isRegistered) {
+        if (connected && isRegistered) {
             router.push('/order-page')
         }
-    }, [isRegistered])
+    }, [connected, isRegistered])
 
     useEffect(() => {
         const getUser = async () => {
