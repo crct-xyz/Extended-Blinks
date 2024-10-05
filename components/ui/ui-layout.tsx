@@ -1,20 +1,17 @@
 'use client'
 
 import { WalletButton } from '../solana/solana-provider'
-import { Orbitron } from 'next/font/google'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { SocialIcon } from 'react-social-icons'
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-import { usePathname } from 'next/navigation'
+import { useWallet } from '@solana/wallet-adapter-react'
+import axios from 'axios'
 
 import { AccountChecker } from '../account/account-ui'
 import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
-
-const orbitron = Orbitron({ subsets: ['latin'] })
 
 export function UiLayout({
     children,
@@ -23,7 +20,36 @@ export function UiLayout({
     links: { label: string; path: string }[]
 }) {
     const { wallet, publicKey } = useWallet()
-    console.log('publicKey', publicKey?.toString())
+    const [isRegistered, setIsRegistered] = React.useState<boolean>()
+    const [publicAddress, setPublicAddress] = React.useState(
+        publicKey?.toString()
+    )
+    console.log('isRegistered', isRegistered)
+
+    useEffect(() => {
+        const getUser = async () => {
+            if (publicKey?.toString()) {
+                try {
+                    await axios
+                        .get(
+                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicKey?.toString()}`
+                        )
+                        .then(function (response) {
+                            setIsRegistered(response.data.is_registered)
+                            console.log(response)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log('error', error)
+                }
+            }
+            return null
+        }
+        getUser()
+    }, [publicKey?.toString()])
+
     return (
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
             <div className="navbar bg-base-300 text-neutral-content border-light-white flex flex-row items-center justify-between rounded-xl border-2 border-solid px-2 py-2 md:px-10">
@@ -41,7 +67,7 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {false ? <RegistrationComp /> : children}
+                    {isRegistered ? <RegistrationComp /> : children}
                 </Suspense>
                 <Toaster position="bottom-right" />
             </div>
