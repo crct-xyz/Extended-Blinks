@@ -21,9 +21,7 @@ export function UiLayout({
 }) {
     const { wallet, publicKey } = useWallet()
     const [isRegistered, setIsRegistered] = React.useState<boolean>()
-    const [publicAddress, setPublicAddress] = React.useState(
-        publicKey?.toString()
-    )
+
     console.log('isRegistered', isRegistered)
 
     useEffect(() => {
@@ -54,6 +52,7 @@ export function UiLayout({
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
             <div className="navbar bg-base-300 text-neutral-content border-light-white flex flex-row items-center justify-between rounded-xl border-2 border-solid px-2 py-2 md:px-10">
                 <LogoIcon />
+                <div className="text-white">{isRegistered?.toString()}</div>
                 <WalletButton />
             </div>
             <ClusterChecker>
@@ -67,7 +66,8 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {isRegistered ? <RegistrationComp /> : children}
+                    {!isRegistered ? <RegistrationComp /> : null}
+                    {children}
                 </Suspense>
                 <Toaster position="bottom-right" />
             </div>
