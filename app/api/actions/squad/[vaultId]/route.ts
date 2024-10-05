@@ -362,14 +362,17 @@ export const POST = async (
               {
                 label: 'Approve',
                 href: `${baseHref}?action=approve&multisigAddress=${multisg}&txIndex=${newTxnIndex}`,
+                type: 'transaction'
               },
               {
                 label: 'Reject',
                 href: `${baseHref}?action=reject&multisigAddress=${multisg}&txIndex=${newTxnIndex} `,
+                type: 'transaction'
               },
               {
                 label: 'Execute',
                 href: `${baseHref}?action=execute&multisigAddress=${multisg}&txIndex=${newTxnIndex}`,
+                type: 'transaction'
               },
             ],
           },
