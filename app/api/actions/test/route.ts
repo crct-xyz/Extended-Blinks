@@ -21,7 +21,7 @@ import {
   LAMPORTS_PER_SOL,
   TransactionMessage,
 } from '@solana/web3.js';
-import * as multisig from '../../../../../node_modules/@sqds/multisig/lib/index';
+import * as multisig from '@sqds/multisig';
 import AWS from 'aws-sdk';
 import axios from 'axios';
 
@@ -30,7 +30,7 @@ const queueUrl =
   'https://sqs.eu-central-1.amazonaws.com/816069166828/action-builder-q';
   const notificationQueueUrl = 'https://sqs.eu-central-1.amazonaws.com/816069166828/NotificationQueue';
 const dbUrl = 'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/telegram/'
-const response = await axios.get(dbUrl);
+// const response = await axios.get(dbUrl);
 // const telegram_user = response.data.telegram_user
 
 const params: AWS.SQS.ReceiveMessageRequest = {

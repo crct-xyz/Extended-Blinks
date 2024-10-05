@@ -94,6 +94,7 @@ export const GET = async (req: Request) => {
               required: true,
             },
           ],
+          type: 'transaction'
         },
       ],
     },
@@ -167,6 +168,7 @@ export const POST = async (req: Request) => {
       message: "",
       links: {
         next: {
+          //@ts-ignore
           type: "inline",
           action: {
             type: "action",

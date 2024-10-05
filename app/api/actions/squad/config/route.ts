@@ -120,6 +120,7 @@ export const POST = async (req: Request) => {
         message: '',
         links: {
           next: {
+            //@ts-ignore
             type: 'inline',
             action: {
               title: `${metadata.name}`,
@@ -157,6 +158,7 @@ export const POST = async (req: Request) => {
         message: '',
         links: {
           next: {
+            //@ts-ignore
             type: 'inline',
             action: {
               title: `${metadata.name}`,
@@ -194,6 +196,7 @@ export const POST = async (req: Request) => {
         message: '',
         links: {
           next: {
+            //@ts-ignore
             type: 'inline',
             action: {
               title: `${metadata.name}`,

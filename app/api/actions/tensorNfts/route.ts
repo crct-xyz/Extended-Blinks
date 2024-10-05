@@ -60,10 +60,12 @@ import {
           {
             label: 'Buy',
             href: `/api/actions/nft/buy?mint=${nftMintAddress}`,
+            type: 'transaction'
           },
           {
             label: 'Sell',
             href: `/api/actions/nft/sell?mint=${nftMintAddress}`,
+            type: 'transaction'
           },
         ],
       },
