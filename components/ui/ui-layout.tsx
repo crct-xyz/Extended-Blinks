@@ -1,5 +1,7 @@
 'use client'
 
+import { redirect } from 'next/navigation'
+
 import { WalletButton } from '../solana/solana-provider'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
@@ -12,6 +14,8 @@ import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
+import { useSessionStorage } from 'usehooks-ts'
+import { useRouter } from 'next/navigation'
 
 export function UiLayout({
     children,
@@ -19,10 +23,28 @@ export function UiLayout({
     children: ReactNode
     links: { label: string; path: string }[]
 }) {
-    const { wallet, publicKey } = useWallet()
+    const { wallet, publicKey, connected } = useWallet()
     const [isRegistered, setIsRegistered] = React.useState<boolean>(true)
+    const [value, setValue, removeValue] = useSessionStorage('is-registered', 0)
+    const router = useRouter()
 
-    console.log('isRegistered', isRegistered)
+    useEffect(() => {
+        if (!connected) {
+            router.push('/')
+        }
+    }, [connected])
+
+    useEffect(() => {
+        if (!connected && !isRegistered) {
+            router.push('/')
+        }
+    }, [connected])
+
+    useEffect(() => {
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
+    }, [connected, isRegistered])
 
     useEffect(() => {
         const getUser = async () => {
@@ -34,6 +56,8 @@ export function UiLayout({
                         )
                         .then(function (response) {
                             setIsRegistered(response.data.is_registered)
+                            setValue(response.data.is_registered)
+
                             console.log(response)
                         })
                         .catch(function (error) {

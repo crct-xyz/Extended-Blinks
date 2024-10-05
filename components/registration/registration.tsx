@@ -3,6 +3,8 @@
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+
 import { useState } from 'react'
 import { SocialIcon } from 'react-social-icons'
 
@@ -10,6 +12,7 @@ const RegistrationComp = () => {
     const [open, setOpen] = useState(true)
     const [setTelegramUsername, setsetTelegramUsername] = useState('' as string)
     const { wallet, publicKey } = useWallet()
+    const router = useRouter()
     const handleRegistration = async () => {
         try {
             await axios.post(
@@ -19,6 +22,7 @@ const RegistrationComp = () => {
                     telegram_username: setTelegramUsername,
                 }
             )
+            router.push('/orderPAge')
         } catch (error) {
             console.error(error)
         }
