@@ -1,11 +1,7 @@
 import './global.css'
-import { Head } from 'next/document'
+import GlobalProvider from 'global-provider/global-provider'
 import { Orbitron } from 'next/font/google'
-import { ClusterProvider } from '../components/cluster/cluster-data-access'
-import { SolanaProvider } from '../components/solana/solana-provider'
 import { UiLayout } from '../components/ui/ui-layout'
-import { UserProvider } from '../context/context-provider'
-import { ReactQueryProvider } from './react-query-provider'
 
 export const metadata = {
     title: 'action-chaining',
@@ -27,15 +23,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={orbitron.className}>
-                <UserProvider>
-                    <ReactQueryProvider>
-                        <ClusterProvider>
-                            <SolanaProvider>
-                                <UiLayout links={links}>{children}</UiLayout>
-                            </SolanaProvider>
-                        </ClusterProvider>
-                    </ReactQueryProvider>
-                </UserProvider>
+                <GlobalProvider>
+                    <UiLayout links={links}>{children}</UiLayout>
+                </GlobalProvider>
             </body>
         </html>
     )
