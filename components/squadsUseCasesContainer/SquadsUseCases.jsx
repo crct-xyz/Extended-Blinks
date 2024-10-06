@@ -1,15 +1,36 @@
 'use client'
+import ReviewUseCaseSquads from 'components/reviewUseCaseSquads/ReviewUseCaseSquads';
 import SendUseCaseSquads from 'components/sendUseCaseSquads/SendUseCaseSquads'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-function SquadsUseCases() {
-
+function SquadsUseCases({data, updateData}) {
+    console.log('gelo: ', data)
     const [showSend, setShowSend] = useState(false);
+    const [showReview, setShowReview] = useState(false);
 
     // Function to handle button click
     const handleSquadsClick = () => {
         setShowSend(prevState => !prevState);
     }
+    const handleReviewClick = () => {
+        setShowReview((prevState) => !prevState);
+        if (!showReview) {
+            updateData({ action_event: {event_type: 'review_tx'} }); // Add action_event field
+            console.log('dat: ', data);
+        } else {
+            updateData({ action_event: null }); // Remove or reset action_event field
+            console.log(data);
+        }
+    };
+    // useEffect(() => {
+    //     if (!showReview) {
+    //         setData({ event_type: 'review_tx' }) 
+    //         console.log("data: ", data)
+    //     } else {
+    //         setData({}) 
+    //         console.log("data: ", data)
+    //     }
+    // }, [showReview]) 
 
   return (
     <div className='flex flex-col text-center'>
@@ -31,7 +52,8 @@ function SquadsUseCases() {
                     </button>
                     <button
                         type="button"
-                        className="rounded-lg bg-[#D9D9D9] px-1"
+                        className={`rounded-lg ${showReview ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
+                        onClick={handleReviewClick}
                     >
                         REVIEW TX
                     </button>
@@ -62,6 +84,7 @@ function SquadsUseCases() {
                 </div>
             </div>
             {showSend && <SendUseCaseSquads />}
+            {showReview && <ReviewUseCaseSquads data={data} updateData={updateData}/>}
     </div>
   )
 }
