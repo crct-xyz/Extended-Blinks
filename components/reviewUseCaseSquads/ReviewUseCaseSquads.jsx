@@ -8,7 +8,7 @@ function ReviewUseCaseSquads({ data, updateData }) {
     const [vaultId, setVaultId] = useState('')
     const [recipients, setRecipients] = useState('')
     const apiUrl = 'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/orders/'
-
+    const requiredFieldsFilled = Boolean(vaultId && recipients)
     // Handle form input changes
     const handleVaultIdChange = (e) =>  setVaultId(e.target.value)
     const handleRecipientsChange = (e) => setRecipients(e.target.value)
@@ -86,7 +86,8 @@ function ReviewUseCaseSquads({ data, updateData }) {
                         href="-"
                         target="_blank"
                         rel="noreferrer"
-                        className="flex w-full items-center justify-center rounded-xl bg-[#00CED1] p-3 text-center text-black md:w-80"
+                        disabled={!vaultId || !recipients}
+                        className={`flex w-full items-center justify-center rounded-xl p-3 text-center text-black md:w-80 ${requiredFieldsFilled ? "bg-[#00CED1] cursor-pointer" : "bg-[#b0dbdc] cursor-not-allowed"}`}
                         onClick={handleSubmit}
                     >
                         PLACE ORDER
