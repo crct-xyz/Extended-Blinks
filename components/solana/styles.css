@@ -1,8 +1,8 @@
 .wallet-adapter-button-trigger {
 	background-color: #00ced1 !important;
 	border-radius: 10px !important;
-	/* padding: 12px; */
-	/* width: 10rem; */
+	padding: 12px;
+	/* width: 170px; */
   /* display: none; */
 
 	@media (max-width: 500px) {

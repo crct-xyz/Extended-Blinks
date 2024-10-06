@@ -21,17 +21,6 @@ function OrderPage() {
             </div>
             <AppContainer />
             <Triggers />
-            <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
-            <a
-                type="button"
-                href="-"
-                target="_blank"
-                rel="noreferrer"
-                className="flex w-full items-center justify-center rounded-xl bg-[#00CED1] p-3 text-center text-black md:w-80"
-            >
-                PLACE ORDER
-            </a>
-            </div>
         </div>
     )
 }
