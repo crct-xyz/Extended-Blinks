@@ -7,7 +7,7 @@ function ReviewUseCaseSquads({ data, updateData }) {
 
     const [vaultId, setVaultId] = useState('')
     const [recipients, setRecipients] = useState('')
-    const apiUrl = 'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/orders/'
+    const apiUrl = 'https://squint-api.vercel.app/orders/'
     const requiredFieldsFilled = Boolean(vaultId && recipients)
     // Handle form input changes
     const handleVaultIdChange = (e) =>  setVaultId(e.target.value)
