@@ -12,6 +12,7 @@ import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
+import { useRouter } from 'next/navigation'
 
 export function UiLayout({
     children,
@@ -19,9 +20,10 @@ export function UiLayout({
     children: ReactNode
     links: { label: string; path: string }[]
 }) {
-    const { wallet, publicKey } = useWallet()
-    const [isRegistered, setIsRegistered] = React.useState<boolean>(true)
+    const { wallet, publicKey, connected } = useWallet()
+    const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
 
+    const router = useRouter()
     console.log('isRegistered', isRegistered)
 
     useEffect(() => {

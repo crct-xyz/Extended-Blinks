@@ -24,7 +24,7 @@ function OrderPage() {
                 href="-"
                 target="_blank"
                 rel="noreferrer"
-                className="flex w-full items-center justify-center rounded-xl bg-[#00CED1] p-3 text-center text-black md:w-80"
+                className="flex w-full items-center justify-center rounded-xl bg-[#00CED1] p-3 text-center text-black sm:w-80"
             >
                 PLACE ORDER
             </a>
