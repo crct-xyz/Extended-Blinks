@@ -4,6 +4,7 @@ import { Orbitron } from 'next/font/google'
 import { ClusterProvider } from '../components/cluster/cluster-data-access'
 import { SolanaProvider } from '../components/solana/solana-provider'
 import { UiLayout } from '../components/ui/ui-layout'
+import { UserProvider } from './context/context-provider'
 import { ReactQueryProvider } from './react-query-provider'
 
 export const metadata = {
@@ -26,13 +27,15 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={orbitron.className}>
-                <ReactQueryProvider>
-                    <ClusterProvider>
-                        <SolanaProvider>
-                            <UiLayout links={links}>{children}</UiLayout>
-                        </SolanaProvider>
-                    </ClusterProvider>
-                </ReactQueryProvider>
+                <UserProvider>
+                    <ReactQueryProvider>
+                        <ClusterProvider>
+                            <SolanaProvider>
+                                <UiLayout links={links}>{children}</UiLayout>
+                            </SolanaProvider>
+                        </ClusterProvider>
+                    </ReactQueryProvider>
+                </UserProvider>
             </body>
         </html>
     )

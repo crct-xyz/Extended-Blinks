@@ -1,21 +1,91 @@
+'use client'
+
+import { useWallet } from '@solana/wallet-adapter-react'
+import axios from 'axios'
 import JupyterIcon from 'components/icons/jupyter-icon'
 import SquadsIcon from 'components/icons/squads-icon'
 import TensorIcon from 'components/icons/tensor-icon'
+import RegistrationComp from 'components/registration/registration'
 import type { Metadata } from 'next'
+import { useRouter } from 'next/navigation'
 import type React from 'react'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { useUserContext } from './context/context-provider'
 
-export const metadata: Metadata = {
-    title: 'Crct app',
-    description: 'Crct',
-    icons: {
-        icon: 'icon.ico',
-    },
-}
+// export const metadata: Metadata = {
+//     title: 'Crct app',
+//     description: 'Crct',
+//     icons: {
+//         icon: 'icon.ico',
+//     },
+// }
 
 export default function Page() {
+    const { wallet, publicKey, connected } = useWallet()
+    const router = useRouter()
+    const [isRegistered, setIsRegistered] = useUserContext()
+    console.log('isRegistered', isRegistered)
+    const handleRegistration = async (telegramUser: string) => {
+        try {
+            await axios
+                .post('https://squint-api.vercel.app/users', {
+                    wallet_public_key: publicKey,
+                    telegram_username: telegramUser,
+                })
+                .then((res) => {
+                    setIsRegistered(res.data.is_registered)
+                })
+            // router.push('/order-page')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        if (connected && !isRegistered) {
+            router.push('/')
+        }
+    }, [connected, isRegistered, router.push])
+
+    useEffect(() => {
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
+    }, [connected, isRegistered, router.push])
+
+    useEffect(() => {
+        const getUser = async () => {
+            // if (publicKey?.toString()) {
+            try {
+                await axios
+                    .get(
+                        `https://squint-api.vercel.app/users/${publicKey?.toString()}`
+                    )
+                    .then((response) => {
+                        setIsRegistered(response.data.is_registered)
+                        sessionStorage.setItem(
+                            'is-registered',
+                            response.data.is_registered
+                        )
+
+                        console.log(response)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } catch (error) {
+                console.log('error', error)
+            }
+            // }
+            // return null
+        }
+        getUser()
+    }, [publicKey, setIsRegistered])
     return (
         <Fragment>
+            {connected && !isRegistered && (
+                <RegistrationComp handleRegistration={handleRegistration} />
+            )}
             <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
                 <a
                     type="button"

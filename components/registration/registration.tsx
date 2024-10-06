@@ -42,7 +42,11 @@ const RegistrationComp = ({
                                     // target="_blank"
                                     rel="noopener noreferrer"
                                 />
-                                <div className="flex flex-col gap-3 text-start">
+                                <form
+                                    action=""
+                                    method="get"
+                                    className="flex flex-col gap-3 text-start"
+                                >
                                     <label htmlFor="telegram">Telegram</label>
                                     <input
                                         type="text"
@@ -54,7 +58,7 @@ const RegistrationComp = ({
                                             setTelegramUsername(e.target.value)
                                         }
                                     />
-                                </div>
+                                </form>
                                 <button
                                     className="animate-bounce rounded-lg bg-[#00CED1]"
                                     onClick={() =>
