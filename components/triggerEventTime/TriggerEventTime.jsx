@@ -6,7 +6,7 @@ function TriggerEventTime() {
             <span className="mt-9 text-white">
                 PLEASE PROVIDE DETAILS FOR THE <br /> TRIGGER EVENT
             </span>
-            <form className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[15.5vw]">
+            <form className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 w-auto">
                 <label
                     className="mb-[-1.5vh] text-base"
                     htmlFor="triggerTime"
