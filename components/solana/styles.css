@@ -16,3 +16,7 @@
 .wallet-adapter-modal-fade-in {
 	position: fixed;
 }
+
+.wallet-adapter-button, .wallet-adapter-button-trigger {
+  width: 10rem;
+}

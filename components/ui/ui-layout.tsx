@@ -1,5 +1,7 @@
 'use client'
 
+import { redirect } from 'next/navigation'
+
 import { WalletButton } from '../solana/solana-provider'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
@@ -22,9 +24,45 @@ export function UiLayout({
 }) {
     const { wallet, publicKey, connected } = useWallet()
     const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
-
     const router = useRouter()
     console.log('isRegistered', isRegistered)
+    const handleRegistration = async (telegramUser: string) => {
+        try {
+            await axios
+                .post(
+                    'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users',
+                    {
+                        wallet_public_key: publicKey,
+                        telegram_username: telegramUser,
+                    }
+                )
+                .then((res) => setIsRegistered(res.data.is_registered))
+            // router.push('/order-page')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        if (!connected) {
+            router.push('/')
+        }
+        if (!isRegistered) {
+            router.push('/')
+        }
+    }, [connected])
+
+    useEffect(() => {
+        if (!connected && !isRegistered) {
+            router.push('/')
+        }
+    }, [connected])
+
+    useEffect(() => {
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
+    }, [connected, isRegistered])
 
     useEffect(() => {
         const getUser = async () => {
@@ -36,6 +74,7 @@ export function UiLayout({
                         )
                         .then(function (response) {
                             setIsRegistered(response.data.is_registered)
+
                             console.log(response)
                         })
                         .catch(function (error) {
@@ -59,7 +98,7 @@ export function UiLayout({
             <ClusterChecker>
                 <AccountChecker />
             </ClusterChecker>
-            <div className="flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+            <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
                 <Suspense
                     fallback={
                         <div className="my-32 text-center">
@@ -67,7 +106,11 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {!isRegistered ? <RegistrationComp /> : null}
+                    {connected && !isRegistered ? (
+                        <RegistrationComp
+                            handleRegistration={handleRegistration}
+                        />
+                    ) : null}
                     {children}
                 </Suspense>
                 <Toaster position="bottom-right" />
