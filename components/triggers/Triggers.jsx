@@ -7,13 +7,13 @@ function Triggers() {
 
     // Function to handle button click
     const handleTriggersClick = () => {
-        setShowTriggers(prevState => !prevState); 
+        setShowTriggers(prevState => !prevState);
     };
   return (
     <div className="flex flex-col items-center justify-center text-center">
             <div className="flex flex-col text-center items-center justify-center">
                 <span className="mt-9 text-white">SET YOUR CUSTOM TRIGGERS</span>
-                <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[15.5vw]">
+                <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 w-auto">
                     <button
                         type="button"
                         className={`rounded-lg ${showTriggers ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}

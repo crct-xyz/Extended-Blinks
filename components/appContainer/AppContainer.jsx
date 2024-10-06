@@ -21,7 +21,7 @@ function AppContainer() {
         <div className="flex flex-col items-center justify-center text-center">
             <div className="flex flex-col text-center">
                 <span className="mt-9 text-white">SELECT AN APP</span>
-                <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[11.5vw]">
+                <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 w-auto">
                     <button
                         type="button"
                         className={`rounded-lg ${showSquads ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
