@@ -5,8 +5,20 @@ import AppContainer from 'components/appContainer/AppContainer'
 import SquadsUseCases from 'components/squadsUseCasesContainer/SquadsUseCases'
 import Triggers from 'components/triggers/Triggers'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { useRouter } from 'next/navigation'
+import { useUserContext } from '../../context/context-provider'
+
 
 function OrderPage() {
+  const [isRegistered, setIsRegistered] = useUserContext()
+  const { wallet, publicKey, connected } = useWallet()
+  const router = useRouter()
+
+   React.useEffect(() => {
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
+    }, [connected, isRegistered, router.push])
 
     return (
         <div className={styles.container}>

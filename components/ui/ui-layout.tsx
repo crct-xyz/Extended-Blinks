@@ -13,8 +13,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
 import { useRouter } from 'next/navigation'
-import { useUserContext } from 'app/context/context-provider'
-
+import { useUserContext } from '../../context/context-provider'
 export function UiLayout({
     children,
 }: {
@@ -24,7 +23,7 @@ export function UiLayout({
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
     const [isRegistered, setIsRegistered] = useUserContext()
-    console.log('isRegistered', isRegistered)
+
     useEffect(() => {
         if (!connected) {
             router.push('/')
