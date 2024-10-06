@@ -15,6 +15,7 @@ const Context = createContext<ProviderContext>({
 export function UserProvider({ children }: { children: ReactNode }) {
     const [isRegistered, setIsRegistered] = useState<boolean>()
     return (
+        //@ts-ignore
         <Context.Provider value={[isRegistered, setIsRegistered]}>
             {children}
         </Context.Provider>

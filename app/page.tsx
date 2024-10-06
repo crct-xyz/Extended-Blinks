@@ -24,6 +24,7 @@ import { useUserContext } from '../context/context-provider'
 export default function Page() {
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
+    //@ts-ignore
     const [isRegistered, setIsRegistered] = useUserContext()
     console.log('isRegistered', isRegistered)
     const { data, error, isFetching, isLoading } = useQuery({
@@ -62,7 +63,7 @@ export default function Page() {
         // if (connected && !isRegistered) {
         //     router.push('/')
         // }
-    }, [connected])
+    }, [connected, router.push])
 
     useEffect(() => {
         if (connected && !isRegistered) {

@@ -22,6 +22,7 @@ export function UiLayout({
 }) {
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
+    //@ts-ignore
     const [isRegistered, setIsRegistered] = useUserContext()
 
     useEffect(() => {
