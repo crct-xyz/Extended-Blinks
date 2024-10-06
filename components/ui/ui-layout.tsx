@@ -14,7 +14,6 @@ import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
-import { useSessionStorage } from 'usehooks-ts'
 import { useRouter } from 'next/navigation'
 
 export function UiLayout({
@@ -25,7 +24,6 @@ export function UiLayout({
 }) {
     const { wallet, publicKey, connected } = useWallet()
     const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
-    const [value, setValue, removeValue] = useSessionStorage('is-registered', 0)
     const router = useRouter()
     console.log('isRegistered', isRegistered)
     const handleRegistration = async (telegramUser: string) => {
@@ -76,7 +74,6 @@ export function UiLayout({
                         )
                         .then(function (response) {
                             setIsRegistered(response.data.is_registered)
-                            setValue(response.data.is_registered)
 
                             console.log(response)
                         })
@@ -101,7 +98,7 @@ export function UiLayout({
             <ClusterChecker>
                 <AccountChecker />
             </ClusterChecker>
-            <div className="flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+            <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
                 <Suspense
                     fallback={
                         <div className="my-32 text-center">
