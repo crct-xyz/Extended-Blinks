@@ -29,13 +29,10 @@ export function UiLayout({
     const handleRegistration = async (telegramUser: string) => {
         try {
             await axios
-                .post(
-                    'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users',
-                    {
-                        wallet_public_key: publicKey,
-                        telegram_username: telegramUser,
-                    }
-                )
+                .post('https://squint-api.vercel.app/users', {
+                    wallet_public_key: publicKey,
+                    telegram_username: telegramUser,
+                })
                 .then((res) => setIsRegistered(res.data.is_registered))
             // router.push('/order-page')
         } catch (error) {
@@ -67,7 +64,7 @@ export function UiLayout({
                 try {
                     await axios
                         .get(
-                            `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicKey?.toString()}`
+                            `https://squint-api.vercel.app/users/${publicKey?.toString()}`
                         )
                         .then(function (response) {
                             setIsRegistered(response.data.is_registered)
