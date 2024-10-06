@@ -28,11 +28,13 @@ export default function Page() {
     console.log('isRegistered', isRegistered)
     const { data, error, isFetching, isLoading } = useQuery({
         queryKey: ['users'],
+        enabled: connected,
         queryFn: async () => {
             const response = await axios.get(
                 `https://squint-api.vercel.app/users/${publicKey?.toString()}`
             )
             const data = await response.data
+            setIsRegistered(data.is_registered)
             return data
         },
     })
@@ -54,43 +56,24 @@ export default function Page() {
     }
 
     useEffect(() => {
+        if (!connected) {
+            router.push('/')
+        }
+        // if (connected && !isRegistered) {
+        //     router.push('/')
+        // }
+    }, [connected])
+
+    useEffect(() => {
         if (connected && !isRegistered) {
             router.push('/')
         }
+
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
     }, [connected, isRegistered, router.push])
 
-    if (connected && isRegistered) {
-        router.push('/order-page')
-    }
-
-    // useEffect(() => {
-    //     const getUser = async () => {
-    //         // if (publicKey?.toString()) {
-    //         try {
-    //             await axios
-    //                 .get(
-    //                     `https://squint-api.vercel.app/users/${publicKey?.toString()}`
-    //                 )
-    //                 .then((response) => {
-    //                     setIsRegistered(response.data.is_registered)
-    //                     sessionStorage.setItem(
-    //                         'is-registered',
-    //                         response.data.is_registered
-    //                     )
-
-    //                     console.log(response)
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log(error)
-    //                 })
-    //         } catch (error) {
-    //             console.log('error', error)
-    //         }
-    //         // }
-    //         // return null
-    //     }
-    //     getUser()
-    // }, [publicKey, setIsRegistered])
     return (
         <Fragment>
             {connected && !isFetching && !isLoading && !isRegistered && (

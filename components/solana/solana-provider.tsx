@@ -54,64 +54,6 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         []
     )
 
-    // const getWalletPublicKey = async () => {
-    //     // Check if Solana is available in the browser
-    //     if ('solana' in window) {
-    //         const provider = window.solana
-
-    //         try {
-    //             // Request wallet connection
-    //             await provider.connect()
-
-    //             // Get the connected wallet's public key
-    //             const publicKey = provider.publicKey
-
-    //             if (publicKey) {
-    //                 return publicKey.toString()
-    //             } else {
-    //                 throw new Error('Public key is null')
-    //             }
-    //         } catch (err) {
-    //             console.error('Error connecting to wallet:', err)
-    //             throw err
-    //         }
-    //     } else {
-    //         throw new Error('Solana object not found! Get a Phantom Wallet 👻')
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     const returnPubKey = async () => {
-    //         const publicaddress = await getWalletPublicKey()
-    //         setPublicAddress(publicaddress)
-    //     }
-    //     returnPubKey()
-    // }, [publicAddress])
-
-    // useEffect(() => {
-    //     const getUser = async () => {
-    //         if (publicAddress) {
-    //             try {
-    //                 await axios
-    //                     .get(
-    //                         `http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/users/${publicAddress}`
-    //                     )
-    //                     .then(function (response) {
-    //                         setIsRegistered(response.data.is_registered)
-    //                         console.log(response)
-    //                     })
-    //                     .catch(function (error) {
-    //                         console.log(error)
-    //                     })
-    //             } catch (error) {
-    //                 console.log('error', error)
-    //             }
-    //         }
-    //         return null
-    //     }
-    //     getUser()
-    // }, [publicAddress])
-
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider

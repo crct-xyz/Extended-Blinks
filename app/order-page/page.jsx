@@ -15,8 +15,8 @@ function OrderPage() {
   const router = useRouter()
 
    React.useEffect(() => {
-        if (connected && isRegistered) {
-            router.push('/order-page')
+        if (connected && !isRegistered) {
+            router.push('/')
         }
     }, [connected, isRegistered, router.push])
 
