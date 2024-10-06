@@ -1,9 +1,12 @@
 'use client'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 function ReviewUseCaseSquads({ data, updateData }) {
     console.log('rewview data received: ', data)
+    const {publicKey} = useWallet()
+    console.log("public key: ", publicKey.toString())
 
     const [vaultId, setVaultId] = useState('')
     const [recipients, setRecipients] = useState('')
@@ -32,7 +35,7 @@ function ReviewUseCaseSquads({ data, updateData }) {
                     recipients
                 }
             },
-            user_id: '5LN6TXBDi6V8HatQashFSAxBSpphaxgbD9EioLEbWohA',
+            user_id: publicKey.toString(),
             timestamp: Date.now()
         }
         console.log("post data: ", postData)
