@@ -10,18 +10,12 @@ function ReviewUseCaseSquads({ data, updateData }) {
     const apiUrl = 'http://ec2-52-59-228-70.eu-central-1.compute.amazonaws.com:8000/orders/'
 
     // Handle form input changes
-    const handleVaultIdChange = (e) => {
-        const value = e.target.value
-        setVaultId(value)
-    }
+    const handleVaultIdChange = (e) =>  setVaultId(e.target.value)
+    const handleRecipientsChange = (e) => setRecipients(e.target.value)
 
-    const handleRecipientsChange = (e) => {
-        const value = e.target.value
-        setRecipients(value)
-    }
 
     const handleSubmit = async(e) => {
-        e.preventDefault() 
+        e.preventDefault()
         const postData = {
             order_id: (Math.floor(Math.random() * 50)).toString(),
             app: data.app,
@@ -35,14 +29,12 @@ function ReviewUseCaseSquads({ data, updateData }) {
             user_id: '5LN6TXBDi6V8HatQashFSAxBSpphaxgbD9EioLEbWohA',
             timestamp: Date.now()
         }
-        console.log("post data: ", postData)
         try {
-            const response = await axios.post(apiUrl, postData, {
+             await axios.post(apiUrl, postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log("response posted: ", response.data)
         }
         catch(error) {
             console.log("eror:", error);
@@ -55,10 +47,10 @@ function ReviewUseCaseSquads({ data, updateData }) {
             </span>
             <form
                 onSubmit={handleSubmit}
-                className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[15.5vw]"
+                className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 w-auto"
             >
                 <label
-                    className="mb-[-1.5vh] text-base"
+                    className="mb-[-1.5vh] text-left"
                     htmlFor="vaultId"
                 >
                     Vault ID
@@ -73,7 +65,7 @@ function ReviewUseCaseSquads({ data, updateData }) {
                     onChange={handleVaultIdChange}
                 />
                 <label
-                    className="mb-[-1.5vh] text-base"
+                    className="mb-[-1.5vh] text-left"
                     htmlFor="recipients"
                 >
                     Recipients
@@ -87,18 +79,19 @@ function ReviewUseCaseSquads({ data, updateData }) {
                     value={recipients} // Bind input value to state
                     onChange={handleRecipientsChange}
                 />
-                <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
+            </form>
+            <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
                     <button
                         type="submit"
                         href="-"
                         target="_blank"
                         rel="noreferrer"
                         className="flex w-full items-center justify-center rounded-xl bg-[#00CED1] p-3 text-center text-black md:w-80"
+                        onClick={handleSubmit}
                     >
                         PLACE ORDER
                     </button>
                 </div>
-            </form>
         </div>
     )
 }

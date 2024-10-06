@@ -11,7 +11,7 @@ function OrderPage() {
     return (
         <div className={styles.container}>
             <div className="flex items-center justify-center text-center text-5xl">
-                <p className="leading-tight md:w-[30rem]">
+                <p className="leading-tight w-auto">
                     <span className="text-[#00CED1]">SET UP&nbsp;</span>
                     <span className="text-white">YOUR </span>
                     <br />

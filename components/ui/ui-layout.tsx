@@ -25,7 +25,7 @@ export function UiLayout({
     const { wallet, publicKey, connected } = useWallet()
     const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
     const router = useRouter()
-    console.log('isRegistered', isRegistered)
+
     const handleRegistration = async (telegramUser: string) => {
         try {
             await axios
@@ -43,20 +43,17 @@ export function UiLayout({
         }
     }
 
-    useEffect(() => {
+    React.useLayoutEffect(() => {
         if (!connected) {
             router.push('/')
         }
-        if (!isRegistered) {
-            router.push('/')
-        }
-    }, [connected])
+    }, [connected, isRegistered])
 
     useEffect(() => {
-        if (!connected && !isRegistered) {
+        if (connected && !isRegistered) {
             router.push('/')
         }
-    }, [connected])
+    }, [connected, isRegistered])
 
     useEffect(() => {
         if (connected && isRegistered) {
@@ -87,7 +84,7 @@ export function UiLayout({
             return null
         }
         getUser()
-    }, [publicKey?.toString()])
+    }, [connected])
 
     return (
         <div className="flex min-h-full flex-col bg-[#1E1E1E]">
