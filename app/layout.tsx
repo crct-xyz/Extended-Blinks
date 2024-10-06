@@ -1,6 +1,11 @@
 import './global.css'
+import LogoIcon from 'components/icons/logo-icon'
+import { WalletButton } from 'components/solana/solana-provider'
 import GlobalProvider from 'global-provider/global-provider'
 import { Orbitron } from 'next/font/google'
+import { Suspense } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { SocialIcon } from 'react-social-icons'
 import { UiLayout } from '../components/ui/ui-layout'
 
 export const metadata = {
@@ -24,7 +29,34 @@ export default function RootLayout({
         <html lang="en">
             <body className={orbitron.className}>
                 <GlobalProvider>
-                    <UiLayout links={links}>{children}</UiLayout>
+                    <div className="flex min-h-full flex-col bg-[#1E1E1E]">
+                        <div className="navbar bg-base-300 text-neutral-content border-light-white flex flex-row items-center justify-between rounded-xl border-2 border-solid px-2 py-2 md:px-10">
+                            <LogoIcon />
+                            <WalletButton />
+                        </div>
+                        {/* <ClusterChecker>
+                            <AccountChecker />
+                        </ClusterChecker> */}
+                        <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+                            <Suspense
+                                fallback={
+                                    <div className="my-32 text-center">
+                                        <span className="loading loading-spinner loading-lg" />
+                                    </div>
+                                }
+                            >
+                                {children}
+                            </Suspense>
+                            <Toaster position="bottom-right" />
+                        </div>
+                        <footer className="flex h-[70px] justify-center">
+                            <SocialIcon
+                                url="https://x.com"
+                                href="https://x.com/crct_xyz/"
+                                target="_blank"
+                            />
+                        </footer>
+                    </div>
                 </GlobalProvider>
             </body>
         </html>
