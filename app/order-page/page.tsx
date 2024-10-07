@@ -1,11 +1,8 @@
 'use client'
 import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
-import AppContainer from 'components/appContainer/AppContainer'
 import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
-import SquadsUseCases from 'components/squadsUseCasesContainer/SquadsUseCases'
-import Triggers from 'components/triggers/Triggers'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useUserContext } from 'providers/context-provider/context-provider'
 import React, { useEffect, useState } from 'react'
 import styles from './order-page.module.css'
@@ -24,11 +21,12 @@ const OrderPage = () => {
     const router = useRouter()
     const requiredFieldsFilled = Boolean(vaultId && recipients)
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         console.log('e', e)
         e.preventDefault()
         const postData = {
             order_id: Math.floor(Math.random() * 50).toString(),
+            //@ts-ignore
             app: data.app,
             action_event: {
                 event_type: 'review_tx',
@@ -86,7 +84,8 @@ const OrderPage = () => {
         } else {
             setData((prevData) => {
                 const newData = { ...prevData }
-                delete newData.app // Remove app field
+
+                //delete newData.app // Remove app field
                 return newData
             })
         }
@@ -96,6 +95,7 @@ const OrderPage = () => {
         setShowUSDC((prevState) => !prevState)
     }
 
+    //@ts-ignore
     const updateData = (newData) => {
         setData((prevData) => ({ ...prevData, ...newData }))
         console.log('updates: ', data)
@@ -210,7 +210,9 @@ const OrderPage = () => {
                 </div>
             )}
             {isOrderSuccessfull ? (
-                <ConfirmationModal handleSuccessOrder={handleSuccessOrder} />
+                <ConfirmationModal
+                    setisOrderSuccessfull={setisOrderSuccessfull}
+                />
             ) : null}
             {showReview && (
                 <div className="flex flex-col items-center justify-center text-center">
@@ -218,10 +220,7 @@ const OrderPage = () => {
                         PLEASE PROVIDE DETAILS FOR THE TX <br /> YOU WANT TO
                         BUILD
                     </span>
-                    <form
-                        onSubmit={handleSubmit}
-                        className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5"
-                    >
+                    <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                         <label
                             className="mb-[-1.5vh] text-left"
                             htmlFor="vaultId"

@@ -4,7 +4,7 @@ import { useConnection } from '@solana/wallet-adapter-react'
 import { IconTrash } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
-import { AppModal } from 'components/ui/ui-layout'
+
 import { ClusterNetwork, useCluster } from './cluster-data-access'
 import { Connection } from '@solana/web3.js'
 
@@ -105,25 +105,7 @@ export function ClusterUiModal({
     const [endpoint, setEndpoint] = useState('')
 
     return (
-        <AppModal
-            title={'Add Cluster'}
-            hide={hideModal}
-            show={show}
-            submit={() => {
-                try {
-                    new Connection(endpoint)
-                    if (name) {
-                        addCluster({ name, network, endpoint })
-                        hideModal()
-                    } else {
-                        console.log('Invalid cluster name')
-                    }
-                } catch {
-                    console.log('Invalid cluster endpoint')
-                }
-            }}
-            submitLabel="Save"
-        >
+        <div>
             <input
                 type="text"
                 placeholder="Name"
@@ -148,7 +130,7 @@ export function ClusterUiModal({
                 <option value={ClusterNetwork.Testnet}>Testnet</option>
                 <option value={ClusterNetwork.Mainnet}>Mainnet</option>
             </select>
-        </AppModal>
+        </div>
     )
 }
 

@@ -6,7 +6,6 @@ import { WalletButton } from 'providers/solana-provider/solana-provider'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { SocialIcon } from 'react-social-icons'
-import { UiLayout } from '../components/ui/ui-layout'
 
 export const metadata = {
     title: 'action-chaining',

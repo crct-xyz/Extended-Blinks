@@ -1,12 +1,9 @@
-import { useUserContext } from 'providers/context-provider/context-provider'
-
 const ConfirmationModal = ({
-    handleSuccessOrder,
+    setisOrderSuccessfull,
 }: {
-    handleSuccessOrder: React.Dispatch<React.SetStateAction<boolean>>
+    setisOrderSuccessfull: (value: boolean) => void
 }) => {
     //@ts-ignore
-    const { setIsOrderSuccessfull } = useUserContext()
     return (
         <div className="top-30 absolute right-0 left-0 mx-auto w-96 animate-fadeInUp rounded-md border bg-white p-5 shadow-lg">
             <div className="mt-3 text-center">
@@ -33,7 +30,7 @@ const ConfirmationModal = ({
                     <button
                         id="ok-btn"
                         className="w-full rounded-md bg-[#00CED1] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300"
-                        onClick={() => handleSuccessOrder(false)}
+                        onClick={() => setisOrderSuccessfull(false)}
                     >
                         Dismiss
                     </button>
