@@ -6,7 +6,7 @@ import { useUserContext } from 'providers/context-provider/context-provider'
 
 function ReviewUseCaseSquads({ data, updateData }) {
     const {publicKey} = useWallet()
-    const { isRegistered, setIsRegistered } = useUserContext()
+    const { isRegistered, setIsRegistered, setIsOrderSuccessfull, isOrderSuccessfull } = useUserContext()
     const [vaultId, setVaultId] = useState('')
     const [recipients, setRecipients] = useState('')
     const apiUrl = 'https://squint-api.vercel.app/orders/'
@@ -14,7 +14,7 @@ function ReviewUseCaseSquads({ data, updateData }) {
     // Handle form input changes
     const handleVaultIdChange = (e) =>  setVaultId(e.target.value)
     const handleRecipientsChange = (e) => setRecipients(e.target.value)
-
+console.log('isOrderSuccessfull', isOrderSuccessfull);
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -38,9 +38,10 @@ function ReviewUseCaseSquads({ data, updateData }) {
                 },
             });
 
-            console.log('a', Boolean(a.data));
+            setIsOrderSuccessfull(true)
         }
         catch(error) {
+          setIsOrderSuccessfull(false)
             console.log("eror:", error);
         }
     }

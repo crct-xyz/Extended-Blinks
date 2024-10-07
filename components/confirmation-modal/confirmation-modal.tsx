@@ -1,10 +1,14 @@
+import { useUserContext } from 'providers/context-provider/context-provider'
+
 const ConfirmationModal = () => {
+    //@ts-ignore
+    const { setIsOrderSuccessfull } = useUserContext()
     return (
         <div className="fadeIn relative top-20 mx-auto w-96 rounded-md border bg-white p-5 shadow-lg">
             <div className="mt-3 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
                     <svg
-                        className="h-6 w-6 text-purple-600"
+                        className="h-6 w-6 text-[#00CED1]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -19,19 +23,20 @@ const ConfirmationModal = () => {
                     </svg>
                 </div>
                 <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Successfull
+                    Your order was submitted
                 </h3>
-                <div className="mt-2 px-7 py-3">
+                {/* <div className="mt-2 px-7 py-3">
                     <p className="text-sm text-gray-500">
                         Account has been Successful registered.
                     </p>
-                </div>
+                </div> */}
                 <div className="items-center px-4 py-3">
                     <button
                         id="ok-btn"
-                        className="w-full rounded-md bg-purple-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                        className="w-full rounded-md bg-[#00CED1] px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                        onClick={() => setIsOrderSuccessfull(false)}
                     >
-                        OK
+                        Dismiss
                     </button>
                 </div>
             </div>

@@ -10,11 +10,12 @@ import React from 'react'
 import styles from './order-page.module.css'
 
 const OrderPage = () => {
-    const { isRegistered, setIsRegistered } = useUserContext()
+    //@ts-ignore
+    const { setIsRegistered, isOrderSuccessfull } = useUserContext()
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
     const pathname = usePathname()
-
+    console.log('isOrderSuccessfull', isOrderSuccessfull)
     // const handleSubmit = async (
     //     event: React.MouseEvent<HTMLButtonElement>,
     //     vaultId: string,
@@ -62,7 +63,7 @@ const OrderPage = () => {
                     <span className="text-white">ORDER</span>
                 </p>
             </div>
-            {/* <ConfirmationModal /> */}
+            {isOrderSuccessfull ? <ConfirmationModal /> : null}
             <AppContainer />
             {/* <Triggers /> */}
         </div>
