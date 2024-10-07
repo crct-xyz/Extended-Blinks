@@ -5,20 +5,28 @@ import AppContainer from 'components/appContainer/AppContainer'
 import SquadsUseCases from 'components/squadsUseCasesContainer/SquadsUseCases'
 import Triggers from 'components/triggers/Triggers'
 import { useWallet } from '@solana/wallet-adapter-react'
-import { useRouter } from 'next/navigation'
-import { useUserContext } from '../../context/context-provider'
+import { useRouter, usePathname } from 'next/navigation'
+import { useUserContext } from '../../providers/context-provider/context-provider'
 
 
-function OrderPage() {
+
+const OrderPage = () => {
   const [isRegistered, setIsRegistered] = useUserContext()
   const { wallet, publicKey, connected } = useWallet()
   const router = useRouter()
+  const pathname = usePathname()
+console.log('connected', connected);
+
+// const isNotOrderPage = pathname !
 
    React.useEffect(() => {
-        if (connected && !isRegistered) {
+        if (  !connected) {
             router.push('/')
         }
-    }, [connected, isRegistered, router.push])
+        // if (connected && !isRegistered) {
+        //     router.push('/')
+        // }
+    }, [connected, router])
 
     return (
         <div className={styles.container}>

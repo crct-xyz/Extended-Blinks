@@ -11,7 +11,7 @@ import type { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
 import type React from 'react'
 import { Fragment, useEffect, useState } from 'react'
-import { useUserContext } from '../context/context-provider'
+import { useUserContext } from '../providers/context-provider/context-provider'
 
 // export const metadata: Metadata = {
 //     title: 'Crct app',
@@ -27,7 +27,7 @@ export default function Page() {
     //@ts-ignore
     const [isRegistered, setIsRegistered] = useUserContext()
     console.log('isRegistered', isRegistered)
-    const { data, error, isFetching, isLoading } = useQuery({
+    const { data, error, isFetching, isLoading, isSuccess } = useQuery({
         queryKey: ['users'],
         enabled: connected,
         queryFn: async () => {
@@ -77,7 +77,7 @@ export default function Page() {
 
     return (
         <Fragment>
-            {connected && !isFetching && !isLoading && !isRegistered && (
+            {connected && isSuccess && !isRegistered && (
                 <RegistrationComp handleRegistration={handleRegistration} />
             )}
             <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">

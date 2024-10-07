@@ -1,7 +1,7 @@
-import { ReactQueryProvider } from 'app/react-query-provider'
-import { ClusterProvider } from 'components/cluster/cluster-data-access'
-import { SolanaProvider } from 'components/solana/solana-provider'
-import { UserProvider } from 'context/context-provider'
+import { ReactQueryProvider } from './react-query-provider'
+import { ClusterProvider } from './cluster/cluster-data-access'
+import { SolanaProvider } from './solana-provider/solana-provider'
+import { UserProvider } from './context-provider/context-provider'
 
 const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     return (
