@@ -4,7 +4,7 @@ const ConfirmationModal = () => {
     //@ts-ignore
     const { setIsOrderSuccessfull } = useUserContext()
     return (
-        <div className="fadeIn relative top-20 mx-auto w-96 rounded-md border bg-white p-5 shadow-lg">
+        <div className="relative top-[600px] mx-auto w-96 animate-fadeInUp rounded-md border bg-white p-5 shadow-lg">
             <div className="mt-3 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
                     <svg
@@ -25,11 +25,6 @@ const ConfirmationModal = () => {
                 <h3 className="text-lg font-medium leading-6 text-gray-900">
                     Your order was submitted
                 </h3>
-                {/* <div className="mt-2 px-7 py-3">
-                    <p className="text-sm text-gray-500">
-                        Account has been Successful registered.
-                    </p>
-                </div> */}
                 <div className="items-center px-4 py-3">
                     <button
                         id="ok-btn"
