@@ -10,7 +10,7 @@ import RegistrationComp from 'components/registration/registration'
 import type { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
 import type React from 'react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, type MouseEvent, useEffect, useState } from 'react'
 import { useUserContext } from '../providers/context-provider/context-provider'
 
 // export const metadata: Metadata = {
@@ -26,7 +26,8 @@ export default function Page() {
     const router = useRouter()
     //@ts-ignore
     const [isRegistered, setIsRegistered] = useUserContext()
-    console.log('isRegistered', isRegistered)
+    const apiUrl = 'https://squint-api.vercel.app/orders/'
+
     const { data, error, isFetching, isLoading, isSuccess } = useQuery({
         queryKey: ['users'],
         enabled: connected,

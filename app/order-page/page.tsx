@@ -7,6 +7,7 @@ import Triggers from 'components/triggers/Triggers'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useUserContext } from '../../providers/context-provider/context-provider'
+import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
 
 
 
@@ -15,17 +16,42 @@ const OrderPage = () => {
   const { wallet, publicKey, connected } = useWallet()
   const router = useRouter()
   const pathname = usePathname()
-console.log('connected', connected);
 
-// const isNotOrderPage = pathname !
+  const handleSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    vaultId: string,
+    recipients: string
+) => {
+    event.preventDefault()
+    const postData = {
+        order_id: Math.floor(Math.random() * 50).toString(),
+        app: data.app,
+        action_event: {
+            event_type: 'review_tx',
+            details: {
+                vault_id: vaultId,
+                recipients,
+            },
+        },
+        user_id: publicKey?.toString(),
+        timestamp: Date.now(),
+    }
+    try {
+        await axios.post(apiUrl, postData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+    } catch (error) {
+        console.log('eror:', error)
+    }
+}
+
 
    React.useEffect(() => {
         if (  !connected) {
             router.push('/')
         }
-        // if (connected && !isRegistered) {
-        //     router.push('/')
-        // }
     }, [connected, router])
 
     return (
@@ -39,8 +65,9 @@ console.log('connected', connected);
                     <span className="text-white">ORDER</span>
                 </p>
             </div>
-            <AppContainer />
-            <Triggers />
+            {/* <ConfirmationModal /> */}
+            <AppContainer handleSubmit={handleSubmit} />
+            {/* <Triggers /> */}
         </div>
     )
 }
