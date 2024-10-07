@@ -15,13 +15,7 @@ import {
     MathWalletAdapter,
 } from '@solana/wallet-adapter-wallets'
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
-import {
-    type ReactNode,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react'
+import { type ReactNode, useCallback, useMemo } from 'react'
 import { useCluster } from '../cluster/cluster-data-access'
 
 import './styles.css'
@@ -34,11 +28,7 @@ export const WalletButton = dynamic(
     { ssr: false }
 )
 
-export function SolanaProvider({ children }: { children: ReactNode }) {
-    // const [publicAddress, setPublicAddress] = useState('')
-    // const [isRegistered, setIsRegistered] = useState<boolean>()
-    // console.log('isRegistered', isRegistered)
-    // const { connection } = useConnection()
+export const SolanaProvider = ({ children }: { children: ReactNode }) => {
     const { cluster } = useCluster()
     const endpoint = useMemo(() => cluster.endpoint, [cluster])
     const onError = useCallback((error: WalletError) => {
