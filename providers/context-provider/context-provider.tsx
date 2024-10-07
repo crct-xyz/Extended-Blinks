@@ -8,6 +8,8 @@ const Context = createContext<SquintContext | null>(null)
 export function UserProvider({ children }: { children: ReactNode }) {
     const [isRegistered, setIsRegistered] = useState<boolean>(true)
     const [isOrderSuccessfull, setIsOrderSuccessfull] = useState<boolean>(false)
+    const [myRecipients, setMyRecipients] = useState<string>('')
+    const [myValueId, setMyValueId] = useState<string>('')
     return (
         <Context.Provider
             value={{
@@ -15,6 +17,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 setIsRegistered,
                 isOrderSuccessfull,
                 setIsOrderSuccessfull,
+                myRecipients,
+                setMyRecipients,
+                myValueId,
+                setMyValueId,
             }}
         >
             {children}
