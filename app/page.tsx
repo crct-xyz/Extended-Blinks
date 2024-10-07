@@ -24,7 +24,6 @@ import { Fragment, type MouseEvent, useEffect, useState } from 'react'
 export default function Page() {
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
-    //@ts-ignore
     const { isRegistered, setIsRegistered } = useUserContext()
     const apiUrl = 'https://squint-api.vercel.app/orders/'
 

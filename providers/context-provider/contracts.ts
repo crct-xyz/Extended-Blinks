@@ -1,6 +1,6 @@
 export type SquintContext = {
-  isRegistered?: boolean
-  setIsRegistered?: (isRegistered: boolean) => void
-  isOrderSuccessfull?: boolean
-  setIsOrderSuccessfull?: (isOrderSuccessfull: boolean) => void
+  isRegistered: boolean
+  setIsRegistered: React.Dispatch<React.SetStateAction<boolean>>
+  isOrderSuccessfull: boolean
+  setIsOrderSuccessfull: React.Dispatch<React.SetStateAction<boolean>>
 }

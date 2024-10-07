@@ -10,7 +10,6 @@ import React from 'react'
 import styles from './order-page.module.css'
 
 const OrderPage = () => {
-    //@ts-ignore
     const { setIsRegistered, isOrderSuccessfull } = useUserContext()
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
