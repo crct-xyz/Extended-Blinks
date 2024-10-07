@@ -92,7 +92,7 @@ console.log('isOrderSuccessfull', isOrderSuccessfull);
                         target="_blank"
                         rel="noreferrer"
                         disabled={!vaultId || !recipients}
-                        className={`flex w-full items-center justify-center rounded-xl p-3 text-center text-black md:w-80 ${requiredFieldsFilled ? "bg-[#00CED1] cursor-pointer" : "bg-[#b0dbdc] cursor-not-allowed"}`}
+                        className={`flex w-full items-center justify-center rounded-xl p-3 text-center  md:w-80 ${requiredFieldsFilled ? "bg-[#00CED1] text-black cursor-pointer" : "bg-[#b0dbdc] text-gray-100 cursor-not-allowed"}`}
                         onClick={handleSubmit}
                     >
                         PLACE ORDER
