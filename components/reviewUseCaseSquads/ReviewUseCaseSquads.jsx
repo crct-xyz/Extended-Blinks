@@ -64,7 +64,7 @@ console.log('isOrderSuccessfull', isOrderSuccessfull);
                     id="vaultId"
                     className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                     type="text"
-                    placeholder="Please enter recipient address"
+                    placeholder="Please enter value"
                     required
                     value={vaultId} // Bind input value to state
                     onChange={handleVaultIdChange}
@@ -79,7 +79,7 @@ console.log('isOrderSuccessfull', isOrderSuccessfull);
                     id="recipients"
                     className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                     type="text"
-                    placeholder="Please enter token ID"
+                    placeholder="Please enter Telegram handle"
                     required
                     value={recipients} // Bind input value to state
                     onChange={handleRecipientsChange}
