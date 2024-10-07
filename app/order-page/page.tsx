@@ -32,7 +32,7 @@ const OrderPage = () => {
                 event_type: 'review_tx',
                 details: {
                     vault_id: myValueId,
-                    myRecipients,
+                    recipients: myRecipients,
                 },
             },
             user_id: publicKey?.toString(),
