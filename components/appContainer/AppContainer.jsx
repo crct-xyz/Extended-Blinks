@@ -53,7 +53,7 @@ function AppContainer() {
                         type="button"
                         className="rounded-lg bg-[#D9D9D9]"
                     >
-                        JUPYTER
+                        JUPITER
                     </button>
                     <button
                         type="button"

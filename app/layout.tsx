@@ -6,7 +6,6 @@ import { WalletButton } from 'providers/solana-provider/solana-provider'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { SocialIcon } from 'react-social-icons'
-import { UiLayout } from '../components/ui/ui-layout'
 
 export const metadata = {
     title: 'action-chaining',
@@ -34,10 +33,7 @@ export default function RootLayout({
                             <LogoIcon />
                             <WalletButton />
                         </div>
-                        {/* <ClusterChecker>
-                            <AccountChecker />
-                        </ClusterChecker> */}
-                        <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+                        <div className="flex grow animate-fadeInUp flex-col justify-evenly px-5 pt-5 md:w-full">
                             <Suspense
                                 fallback={
                                     <div className="my-32 text-center">
