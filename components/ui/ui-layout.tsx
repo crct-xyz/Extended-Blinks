@@ -1,6 +1,6 @@
 'use client'
 
-import { WalletButton } from '../solana/solana-provider'
+import { WalletButton } from 'providers/solana-provider/solana-provider'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { SocialIcon } from 'react-social-icons'
@@ -8,12 +8,12 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
 
 import { AccountChecker } from '../account/account-ui'
-import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
+import { ClusterChecker, ExplorerLink } from 'providers/cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
 import { useRouter } from 'next/navigation'
-import { useUserContext } from '../../context/context-provider'
+import { useUserContext } from 'providers/context-provider/context-provider'
 export function UiLayout({
     children,
 }: {
@@ -43,7 +43,7 @@ export function UiLayout({
             <ClusterChecker>
                 <AccountChecker />
             </ClusterChecker>
-            <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+            <div className="flex grow animate-fadeInUp flex-col justify-evenly px-5 pt-5 md:w-full">
                 <Suspense
                     fallback={
                         <div className="my-32 text-center">
