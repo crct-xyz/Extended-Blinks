@@ -85,7 +85,7 @@ console.log('isOrderSuccessfull', isOrderSuccessfull);
                     onChange={handleRecipientsChange}
                 />
             </form>
-            <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
+            <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center w-full md:w-50">
                     <button
                         type="submit"
                         href="-"
