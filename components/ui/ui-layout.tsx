@@ -1,8 +1,6 @@
 'use client'
 
-import { redirect } from 'next/navigation'
-
-import { WalletButton } from '../solana/solana-provider'
+import { WalletButton } from 'providers/solana-provider/solana-provider'
 import * as React from 'react'
 import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { SocialIcon } from 'react-social-icons'
@@ -10,12 +8,12 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
 
 import { AccountChecker } from '../account/account-ui'
-import { ClusterChecker, ExplorerLink } from '../cluster/cluster-ui'
+import { ClusterChecker, ExplorerLink } from 'providers/cluster/cluster-ui'
 import toast, { Toaster } from 'react-hot-toast'
 import LogoIcon from 'components/icons/logo-icon'
 import RegistrationComp from 'components/registration/registration'
 import { useRouter } from 'next/navigation'
-
+import { useUserContext } from 'providers/context-provider/context-provider'
 export function UiLayout({
     children,
 }: {
@@ -23,64 +21,17 @@ export function UiLayout({
     links: { label: string; path: string }[]
 }) {
     const { wallet, publicKey, connected } = useWallet()
-    const [isRegistered, setIsRegistered] = React.useState<boolean>(false)
     const router = useRouter()
+    //@ts-ignore
+    const [isRegistered, setIsRegistered] = useUserContext()
 
-    const handleRegistration = async (telegramUser: string) => {
-        try {
-            await axios
-                .post('https://squint-api.vercel.app/users', {
-                    wallet_public_key: publicKey,
-                    telegram_username: telegramUser,
-                })
-                .then((res) => setIsRegistered(res.data.is_registered))
-            // router.push('/order-page')
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    React.useLayoutEffect(() => {
+    useEffect(() => {
         if (!connected) {
             router.push('/')
         }
-    }, [connected, isRegistered])
-
-    useEffect(() => {
         if (connected && !isRegistered) {
             router.push('/')
         }
-    }, [connected, isRegistered])
-
-    useEffect(() => {
-        if (connected && isRegistered) {
-            router.push('/order-page')
-        }
-    }, [connected, isRegistered])
-
-    useEffect(() => {
-        const getUser = async () => {
-            if (publicKey?.toString()) {
-                try {
-                    await axios
-                        .get(
-                            `https://squint-api.vercel.app/users/${publicKey?.toString()}`
-                        )
-                        .then(function (response) {
-                            setIsRegistered(response.data.is_registered)
-
-                            console.log(response)
-                        })
-                        .catch(function (error) {
-                            console.log(error)
-                        })
-                } catch (error) {
-                    console.log('error', error)
-                }
-            }
-            return null
-        }
-        getUser()
     }, [connected])
 
     return (
@@ -92,7 +43,7 @@ export function UiLayout({
             <ClusterChecker>
                 <AccountChecker />
             </ClusterChecker>
-            <div className="animate-fadeInUp flex grow flex-col justify-evenly px-5 pt-5 md:w-full">
+            <div className="flex grow animate-fadeInUp flex-col justify-evenly px-5 pt-5 md:w-full">
                 <Suspense
                     fallback={
                         <div className="my-32 text-center">
@@ -100,11 +51,6 @@ export function UiLayout({
                         </div>
                     }
                 >
-                    {connected && !isRegistered ? (
-                        <RegistrationComp
-                            handleRegistration={handleRegistration}
-                        />
-                    ) : null}
                     {children}
                 </Suspense>
                 <Toaster position="bottom-right" />
