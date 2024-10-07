@@ -2,12 +2,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useWallet } from '@solana/wallet-adapter-react'
+import { useUserContext } from 'providers/context-provider/context-provider'
 
 function ReviewUseCaseSquads({ data, updateData }) {
-    console.log('rewview data received: ', data)
     const {publicKey} = useWallet()
-    console.log("public key: ", publicKey.toString())
-
+    const { isRegistered, setIsRegistered } = useUserContext()
     const [vaultId, setVaultId] = useState('')
     const [recipients, setRecipients] = useState('')
     const apiUrl = 'https://squint-api.vercel.app/orders/'
@@ -33,11 +32,13 @@ function ReviewUseCaseSquads({ data, updateData }) {
             timestamp: Date.now()
         }
         try {
-             await axios.post(apiUrl, postData, {
+             const a = await axios.post(apiUrl, postData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
+
+            console.log('a', Boolean(a.data));
         }
         catch(error) {
             console.log("eror:", error);

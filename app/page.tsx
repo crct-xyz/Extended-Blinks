@@ -9,9 +9,9 @@ import TensorIcon from 'components/icons/tensor-icon'
 import RegistrationComp from 'components/registration/registration'
 import type { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
+import { useUserContext } from 'providers/context-provider/context-provider'
 import type React from 'react'
 import { Fragment, type MouseEvent, useEffect, useState } from 'react'
-import { useUserContext } from '../providers/context-provider/context-provider'
 
 // export const metadata: Metadata = {
 //     title: 'Crct app',
@@ -25,7 +25,7 @@ export default function Page() {
     const { wallet, publicKey, connected } = useWallet()
     const router = useRouter()
     //@ts-ignore
-    const [isRegistered, setIsRegistered] = useUserContext()
+    const { isRegistered, setIsRegistered } = useUserContext()
     const apiUrl = 'https://squint-api.vercel.app/orders/'
 
     const { data, error, isFetching, isLoading, isSuccess } = useQuery({

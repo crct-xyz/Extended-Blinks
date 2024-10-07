@@ -4,7 +4,6 @@ import SendUseCaseSquads from 'components/sendUseCaseSquads/SendUseCaseSquads'
 import React, { useEffect, useState } from 'react'
 
 function SquadsUseCases({data, updateData}) {
-    console.log('gelo: ', data)
     const [showSend, setShowSend] = useState(false);
     const [showReview, setShowReview] = useState(false);
 
@@ -24,13 +23,13 @@ function SquadsUseCases({data, updateData}) {
     };
     // useEffect(() => {
     //     if (!showReview) {
-    //         setData({ event_type: 'review_tx' }) 
+    //         setData({ event_type: 'review_tx' })
     //         console.log("data: ", data)
     //     } else {
-    //         setData({}) 
+    //         setData({})
     //         console.log("data: ", data)
     //     }
-    // }, [showReview]) 
+    // }, [showReview])
 
   return (
     <div className='flex flex-col text-center'>
