@@ -171,14 +171,17 @@ export const POST = async (req: Request) => {
             type: 'action',
             links: {
               actions: [
+                //@ts-ignore
                 {
                   label: 'Approve',
                   href: `${baseHref}?action=approve&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`,
                 },
+                //@ts-ignore
                 {
                   label: 'Reject',
                   href: `${baseHref}?action=reject&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`,
                 },
+                //@ts-ignore
                 {
                   label: 'Execute',
                   href: `${baseHref}?action=execute&multisigAddress=${multisigAddress}&txIndex=${transactionNumber}`,

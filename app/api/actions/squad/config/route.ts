@@ -130,6 +130,7 @@ export const POST = async (req: Request) => {
               type: 'action',
               links: {
                 actions: [
+                  //@ts-ignores
                   {
                     label: 'Add',
                     href: `${baseHref}?action=add&memberAddress={memberAddress}`,
@@ -168,6 +169,7 @@ export const POST = async (req: Request) => {
               type: 'action',
               links: {
                 actions: [
+                  //@ts-ignore
                   {
                     label: 'Change Threshold',
                     href: `${baseHref}?action=change&newThreshold={newThreshold}`,
@@ -206,6 +208,7 @@ export const POST = async (req: Request) => {
               type: 'action',
               links: {
                 actions: [
+                  //@ts-ignore
                   {
                     label: 'Remove',
                     href: `${baseHref}?action=remove&memberAddress={memberAddress}`,

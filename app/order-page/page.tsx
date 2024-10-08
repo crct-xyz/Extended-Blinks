@@ -5,6 +5,7 @@ import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styles from './order-page.module.css'
+import ButtonAnimation from 'components/button-animation/button-animation'
 
 const OrderPage = () => {
     const [showSquads, setShowSquads] = useState(false)
@@ -17,12 +18,26 @@ const OrderPage = () => {
     const [tgUsername, setTgUsername] = useState('')
     const [recipients, setRecipients] = useState('')
     const [currency, setCurrency] = useState('')
+    const [tokenId, setTokenId] = useState('')
     const [amount, setAmount] = useState('')
     const [isOrderSuccessfull, setisOrderSuccessfull] = useState<boolean>(false)
+    const [recipientAddress, setRecipientAddress] = useState('')
     const { publicKey, connected } = useWallet()
     const router = useRouter()
     const requiredFieldsFilled = Boolean(vaultId || recipients || tgUsername)
+    const vaultIdAndRecipients = vaultId && recipients
+    const usdRequestMoney = tgUsername && amount && currency
+    console.log('recipients', !!recipients)
+    console.log('amount', !!amount)
+    console.log('!tokenId', !!tokenId)
+    console.log('!!vaultId', !!vaultId)
+    const recipientAmountTokenIdVaultId = Boolean(
+        recipients && amount && tokenId && vaultId
+    )
 
+    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
+
+    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         // reset the fields
@@ -108,37 +123,41 @@ const OrderPage = () => {
         setCurrency(e.target.value)
     }
     const handleReviewClick = () => {
+        setShowSend(false)
         setShowReview((prevState) => !prevState)
         if (!showReview) {
             updateData({ action_event: { event_type: 'review_tx' } }) // Add action_event field
-            console.log('dat: ', data)
         } else {
             updateData({ action_event: null }) // Remove or reset action_event field
-            console.log(data)
         }
     }
     const handleUSDCClick = () => {
+        setShowRequestUSDC(false)
         setShowSquads(false)
+        setShowReview(false)
         setShowUSDC((prevState) => !prevState)
     }
     const handleSquadsClick = () => {
+        setShowRequestUSDC(false)
+        setShowReview(false)
         setShowUSDC(false)
         setShowSquads((prevState) => !prevState)
     }
     const handleRequestUSDC = () => {
+        setShowSquads(false)
         setShowRequestUSDC((prevState) => !prevState)
     }
-
-    const handleSuccessOrder = (value: boolean) => setisOrderSuccessfull(value)
+    const handleSendClick = () => {
+        setShowSend((prevState) => !prevState)
+        setShowReview(false)
+    }
 
     useEffect(() => {
         if (showSquads) {
-            setData((prevData) => ({ ...prevData, app: 'squads' })) // Add the app field to data
+            setData((prevData) => ({ ...prevData, app: 'squads' })) // Add the app fie(prevState) => !prevStat to data
         } else {
             setData((prevData) => {
                 const newData = { ...prevData }
-
-                //delete newData.app // Remove app field
                 return newData
             })
         }
@@ -171,38 +190,27 @@ const OrderPage = () => {
                 <div className="flex flex-col text-center">
                     <span className="mt-9 text-white">SELECT AN APP</span>
                     <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
-                        <button
-                            type="button"
+                        <ButtonAnimation
                             className={`rounded-lg ${showSquads ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleSquadsClick}
                         >
                             SQUADS
-                        </button>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
-                            JUPITER
-                        </button>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
+                        </ButtonAnimation>
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
+                            JUITER
+                        </ButtonAnimation>
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
                             TENSOR
-                        </button>
-                        <button
-                            type="button"
+                        </ButtonAnimation>
+                        <ButtonAnimation
                             className={`rounded-lg ${showUSDC ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleUSDCClick}
                         >
                             USDC
-                        </button>
+                        </ButtonAnimation>
                     </div>
                 </div>
-                {/* <AppContainer /> */}
-                {/* <Triggers /> */}
             </div>
-
             {showSquads && (
                 <div className="flex flex-col text-center">
                     <div className="flex flex-col items-center justify-center text-center">
@@ -210,51 +218,98 @@ const OrderPage = () => {
                             CHOOSE YOUR ACTION
                         </span>
                         <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
-                            <button
-                                type="button"
+                            <ButtonAnimation
                                 className={`rounded-lg px-1 ${showSend ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
-                                onClick={handleSquadsClick}
+                                onClick={handleSendClick}
                             >
                                 SEND
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 DEPOSIT
-                            </button>
-                            <button
-                                type="button"
+                            </ButtonAnimation>
+                            <ButtonAnimation
                                 className={`rounded-lg ${showReview ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                                 onClick={handleReviewClick}
                             >
                                 REVIEW TX
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 CANCEL TX
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 ADD MEMBER
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 REMOVE MEMBER
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 RESET THRESHOLD
-                            </button>
+                            </ButtonAnimation>
                         </div>
+                    </div>
+                </div>
+            )}
+            {showSend && (
+                <div className="flex flex-col text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <span className="mt-9 text-white">
+                            PLEASE PROVIDE DETAILS FOR THE TX <br /> YOU WANT TO
+                            BUILD
+                        </span>
+                        <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="recipientAddress"
+                            >
+                                Recipient address
+                            </label>
+                            <input
+                                id="recipientAddress"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter recipient address"
+                                onChange={(e) => setRecipients(e.target.value)}
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="amount"
+                            >
+                                Amount
+                            </label>
+                            <input
+                                id="amount"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="number"
+                                placeholder="Please enter amount"
+                                onChange={(e) => setAmount(e.target.value)}
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="asset"
+                            >
+                                Token Account ID
+                            </label>
+                            <input
+                                id="asset"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter token ID"
+                                onChange={(e) => setTokenId(e.target.value)}
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="vaultId"
+                            >
+                                Squads Vault ID
+                            </label>
+                            <input
+                                id="vaultId"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter vault ID"
+                                onChange={(e) => setVaultId(e.target.value)}
+                            />
+                        </form>
                     </div>
                 </div>
             )}
@@ -303,28 +358,22 @@ const OrderPage = () => {
                     </form>
                 </div>
             )}
-
             {showUSDC && (
                 <div className="flex flex-col items-center justify-center text-center">
                     <span className="mt-9 text-white">CHOOSE YOUR ACTION</span>
-                    <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[15.5vw]">
-                        <button
-                            type="button"
+                    <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
+                        <ButtonAnimation
                             className={`rounded-lg ${showRequestUSDC ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleRequestUSDC}
                         >
                             REQUEST MONEY
-                        </button>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
+                        </ButtonAnimation>
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
                             BRIDGE USDC
-                        </button>
+                        </ButtonAnimation>
                     </div>
                 </div>
             )}
-
             {showRequestUSDC && (
                 <div className="flex flex-col items-center justify-center text-center">
                     <span className="mt-9 text-white">
@@ -390,13 +439,12 @@ const OrderPage = () => {
                     </form>
                 </div>
             )}
-
             <div className="md:w-50 mt-[25px] mb-[25px] flex w-full flex-col items-center gap-5 text-center">
                 <button
                     type="submit"
                     rel="noreferrer"
                     // disabled={!vaultId || !recipients}
-                    className={`flex w-full items-center justify-center rounded-xl p-3 text-center md:w-80 ${requiredFieldsFilled ? 'cursor-pointer bg-[#00CED1] text-black' : 'cursor-not-allowed bg-[#b0dbdc] text-gray-100'}`}
+                    className={`flex w-full items-center justify-center rounded-xl p-3 text-center md:w-80 ${vaultIdAndRecipients || usdRequestMoney || recipientAmountTokenIdVaultId ? 'cursor-pointer bg-[#00CED1] text-black' : 'cursor-not-allowed bg-[#b0dbdc] text-gray-100'}`}
                     onClick={handleSubmit}
                 >
                     PLACE ORDER
