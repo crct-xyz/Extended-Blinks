@@ -109,6 +109,7 @@ const OrderPage = () => {
         setCurrency(e.target.value)
     }
     const handleReviewClick = () => {
+        setShowSend(false)
         setShowReview((prevState) => !prevState)
         if (!showReview) {
             updateData({ action_event: { event_type: 'review_tx' } }) // Add action_event field
@@ -117,20 +118,29 @@ const OrderPage = () => {
         }
     }
     const handleUSDCClick = () => {
+        setShowRequestUSDC(false)
         setShowSquads(false)
+        setShowReview(false)
         setShowUSDC((prevState) => !prevState)
     }
     const handleSquadsClick = () => {
+        setShowRequestUSDC(false)
+        setShowReview(false)
         setShowUSDC(false)
         setShowSquads((prevState) => !prevState)
     }
     const handleRequestUSDC = () => {
+        setShowSquads(false)
         setShowRequestUSDC((prevState) => !prevState)
+    }
+    const handleSendClick = () => {
+        setShowSend((prevState) => !prevState)
+        setShowReview(false)
     }
 
     useEffect(() => {
         if (showSquads) {
-            setData((prevData) => ({ ...prevData, app: 'squads' })) // Add the app field to data
+            setData((prevData) => ({ ...prevData, app: 'squads' })) // Add the app fie(prevState) => !prevStat to data
         } else {
             setData((prevData) => {
                 const newData = { ...prevData }
@@ -196,7 +206,7 @@ const OrderPage = () => {
                         <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                             <ButtonAnimation
                                 className={`rounded-lg px-1 ${showSend ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
-                                onClick={handleSquadsClick}
+                                onClick={handleSendClick}
                             >
                                 SEND
                             </ButtonAnimation>
@@ -222,6 +232,66 @@ const OrderPage = () => {
                                 RESET THRESHOLD
                             </ButtonAnimation>
                         </div>
+                    </div>
+                </div>
+            )}
+            {showSend && (
+                <div className="flex flex-col text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <span className="mt-9 text-white">
+                            PLEASE PROVIDE DETAILS FOR THE TX <br /> YOU WANT TO
+                            BUILD
+                        </span>
+                        <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="recipientAddress"
+                            >
+                                Recipient address
+                            </label>
+                            <input
+                                id="recipientAddress"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter recipient address"
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="amount"
+                            >
+                                Amount
+                            </label>
+                            <input
+                                id="amount"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="number"
+                                placeholder="Please enter amount"
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="asset"
+                            >
+                                Token Account ID
+                            </label>
+                            <input
+                                id="asset"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter token ID"
+                            />
+                            <label
+                                className="mb-[-1.5vh] text-base"
+                                htmlFor="vaultId"
+                            >
+                                Squads Vault ID
+                            </label>
+                            <input
+                                id="vaultId"
+                                className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
+                                type="text"
+                                placeholder="Please enter vault ID"
+                            />
+                        </form>
                     </div>
                 </div>
             )}
@@ -270,7 +340,6 @@ const OrderPage = () => {
                     </form>
                 </div>
             )}
-
             {showUSDC && (
                 <div className="flex flex-col items-center justify-center text-center">
                     <span className="mt-9 text-white">CHOOSE YOUR ACTION</span>
@@ -287,7 +356,6 @@ const OrderPage = () => {
                     </div>
                 </div>
             )}
-
             {showRequestUSDC && (
                 <div className="flex flex-col items-center justify-center text-center">
                     <span className="mt-9 text-white">
@@ -353,7 +421,6 @@ const OrderPage = () => {
                     </form>
                 </div>
             )}
-
             <div className="md:w-50 mt-[25px] mb-[25px] flex w-full flex-col items-center gap-5 text-center">
                 <button
                     type="submit"
