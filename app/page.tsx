@@ -56,14 +56,14 @@ export default function Page() {
         }
     }
 
-    useEffect(() => {
-        if (!connected) {
-            router.push('/')
-        }
-        // if (connected && !isRegistered) {
-        //     router.push('/')
-        // }
-    }, [connected, router.push])
+    // useEffect(() => {
+    //     if (!connected) {
+    //         router.push('/')
+    //     }
+    //     // if (connected && !isRegistered) {
+    //     //     router.push('/')
+    //     // }
+    // }, [connected, router.push])
 
     useEffect(() => {
         if (connected && !isRegistered) {
@@ -76,7 +76,7 @@ export default function Page() {
     }, [connected, isRegistered, router.push])
 
     return (
-        <Fragment>
+        <div className="animate-fadeInUp">
             {connected && isSuccess && !isRegistered && (
                 <RegistrationComp handleRegistration={handleRegistration} />
             )}
@@ -241,6 +241,6 @@ export default function Page() {
                     COMING SOON
                 </span>
             </div>
-        </Fragment>
+        </div>
     )
 }
