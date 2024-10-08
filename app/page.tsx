@@ -1,21 +1,85 @@
+'use client'
+
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 import JupyterIcon from 'components/icons/jupyter-icon'
 import SquadsIcon from 'components/icons/squads-icon'
 import TensorIcon from 'components/icons/tensor-icon'
+import RegistrationComp from 'components/registration/registration'
 import type { Metadata } from 'next'
+import { useRouter } from 'next/navigation'
+import { useUserContext } from 'providers/context-provider/context-provider'
 import type React from 'react'
-import { Fragment } from 'react'
+import { Fragment, type MouseEvent, useEffect, useState } from 'react'
 
-export const metadata: Metadata = {
-    title: 'Crct app',
-    description: 'Crct',
-    icons: {
-        icon: 'icon.ico',
-    },
-}
+// export const metadata: Metadata = {
+//     title: 'Crct app',
+//     description: 'Crct',
+//     icons: {
+//         icon: 'icon.ico',
+//     },
+// }
 
 export default function Page() {
+    const { wallet, publicKey, connected } = useWallet()
+    const router = useRouter()
+    const { isRegistered, setIsRegistered } = useUserContext()
+    const apiUrl = 'https://squint-api.vercel.app/orders/'
+
+    const { data, error, isFetching, isLoading, isSuccess } = useQuery({
+        queryKey: ['users'],
+        enabled: connected,
+        queryFn: async () => {
+            const response = await axios.get(
+                `https://squint-api.vercel.app/users/${publicKey?.toString()}`
+            )
+            const data = await response.data
+            setIsRegistered(data.is_registered)
+            return data
+        },
+    })
+
+    const handleRegistration = async (telegramUser: string) => {
+        try {
+            await axios
+                .post('https://squint-api.vercel.app/users', {
+                    wallet_public_key: publicKey,
+                    telegram_username: telegramUser,
+                })
+                .then((res) => {
+                    setIsRegistered(res.data.is_registered)
+                })
+            router.push('/order-page')
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        if (!connected) {
+            router.push('/')
+        }
+        // if (connected && !isRegistered) {
+        //     router.push('/')
+        // }
+    }, [connected, router.push])
+
+    useEffect(() => {
+        if (connected && !isRegistered) {
+            router.push('/')
+        }
+
+        if (connected && isRegistered) {
+            router.push('/order-page')
+        }
+    }, [connected, isRegistered, router.push])
+
     return (
         <Fragment>
+            {connected && isSuccess && !isRegistered && (
+                <RegistrationComp handleRegistration={handleRegistration} />
+            )}
             <div className="mt-[25px] mb-[25px] flex flex-col items-center gap-5 text-center">
                 <a
                     type="button"
