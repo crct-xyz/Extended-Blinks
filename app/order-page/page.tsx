@@ -112,10 +112,8 @@ const OrderPage = () => {
         setShowReview((prevState) => !prevState)
         if (!showReview) {
             updateData({ action_event: { event_type: 'review_tx' } }) // Add action_event field
-            console.log('dat: ', data)
         } else {
             updateData({ action_event: null }) // Remove or reset action_event field
-            console.log(data)
         }
     }
     const handleUSDCClick = () => {
@@ -129,8 +127,6 @@ const OrderPage = () => {
     const handleRequestUSDC = () => {
         setShowRequestUSDC((prevState) => !prevState)
     }
-
-    const handleSuccessOrder = (value: boolean) => setisOrderSuccessfull(value)
 
     useEffect(() => {
         if (showSquads) {
@@ -178,25 +174,18 @@ const OrderPage = () => {
                         >
                             SQUADS
                         </ButtonAnimation>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
-                            JUPITER
-                        </button>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
+                            JUITER
+                        </ButtonAnimation>
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
                             TENSOR
-                        </button>
-                        <button
-                            type="button"
+                        </ButtonAnimation>
+                        <ButtonAnimation
                             className={`rounded-lg ${showUSDC ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleUSDCClick}
                         >
                             USDC
-                        </button>
+                        </ButtonAnimation>
                     </div>
                 </div>
                 {/* <AppContainer /> */}
@@ -210,50 +199,33 @@ const OrderPage = () => {
                             CHOOSE YOUR ACTION
                         </span>
                         <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
-                            <button
-                                type="button"
+                            <ButtonAnimation
                                 className={`rounded-lg px-1 ${showSend ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                                 onClick={handleSquadsClick}
                             >
                                 SEND
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 DEPOSIT
-                            </button>
-                            <button
-                                type="button"
+                            </ButtonAnimation>
+                            <ButtonAnimation
                                 className={`rounded-lg ${showReview ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                                 onClick={handleReviewClick}
                             >
                                 REVIEW TX
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 CANCEL TX
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 ADD MEMBER
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 REMOVE MEMBER
-                            </button>
-                            <button
-                                type="button"
-                                className="rounded-lg bg-[#D9D9D9] px-1"
-                            >
+                            </ButtonAnimation>
+                            <ButtonAnimation className="rounded-lg bg-[#D9D9D9] px-1">
                                 RESET THRESHOLD
-                            </button>
+                            </ButtonAnimation>
                         </div>
                     </div>
                 </div>
@@ -307,20 +279,16 @@ const OrderPage = () => {
             {showUSDC && (
                 <div className="flex flex-col items-center justify-center text-center">
                     <span className="mt-9 text-white">CHOOSE YOUR ACTION</span>
-                    <div className="border-light-white mt-3 flex flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5 md:w-[15.5vw]">
-                        <button
-                            type="button"
+                    <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
+                        <ButtonAnimation
                             className={`rounded-lg ${showRequestUSDC ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleRequestUSDC}
                         >
                             REQUEST MONEY
-                        </button>
-                        <button
-                            type="button"
-                            className="rounded-lg bg-[#D9D9D9]"
-                        >
+                        </ButtonAnimation>
+                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
                             BRIDGE USDC
-                        </button>
+                        </ButtonAnimation>
                     </div>
                 </div>
             )}

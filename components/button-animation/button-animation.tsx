@@ -7,7 +7,7 @@ const ButtonAnimation = ({
 }: {
     children: string
     className: string
-    onClick: () => void
+    onClick?: () => void
 }) => {
     return (
         <button onClick={onClick}>
