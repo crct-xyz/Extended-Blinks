@@ -134,8 +134,6 @@ const OrderPage = () => {
         } else {
             setData((prevData) => {
                 const newData = { ...prevData }
-
-                //delete newData.app // Remove app field
                 return newData
             })
         }
@@ -188,10 +186,7 @@ const OrderPage = () => {
                         </ButtonAnimation>
                     </div>
                 </div>
-                {/* <AppContainer /> */}
-                {/* <Triggers /> */}
             </div>
-
             {showSquads && (
                 <div className="flex flex-col text-center">
                     <div className="flex flex-col items-center justify-center text-center">
