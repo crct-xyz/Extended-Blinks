@@ -76,7 +76,7 @@ export default function Page() {
     }, [connected, isRegistered])
 
     return (
-        <Fragment>
+        <div className="animate-fadeInUp">
             {connected && isSuccess && !isRegistered && (
                 <RegistrationComp handleRegistration={handleRegistration} />
             )}
@@ -241,6 +241,6 @@ export default function Page() {
                     COMING SOON
                 </span>
             </div>
-        </Fragment>
+        </div>
     )
 }

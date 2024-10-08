@@ -176,7 +176,7 @@ const OrderPage = () => {
     }, [connected, router])
 
     return (
-        <div className={styles.container}>
+        <div className="animate-fadeInUp">
             <div className="flex items-center justify-center text-center text-5xl">
                 <p className="w-auto leading-tight">
                     <span className="text-[#00CED1]">SET UP&nbsp;</span>
