@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useUserContext } from 'providers/context-provider/context-provider'
 import React, { useEffect, useState } from 'react'
 import styles from './order-page.module.css'
+import ButtonAnimation from 'components/button-animation/button-animation'
 
 const OrderPage = () => {
     const [showSquads, setShowSquads] = useState(false)
@@ -122,13 +123,12 @@ const OrderPage = () => {
                 <div className="flex flex-col text-center">
                     <span className="mt-9 text-white">SELECT AN APP</span>
                     <div className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
-                        <button
-                            type="button"
+                        <ButtonAnimation
                             className={`rounded-lg ${showSquads ? 'bg-[#00CED1]' : 'bg-[#D9D9D9]'}`}
                             onClick={handleSquadsClick}
                         >
                             SQUADS
-                        </button>
+                        </ButtonAnimation>
                         <button
                             type="button"
                             className="rounded-lg bg-[#D9D9D9]"

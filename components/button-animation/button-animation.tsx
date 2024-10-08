@@ -1,9 +1,17 @@
 import './styles.css'
 
-const ButtonAnimation = ({ children }: { children: string }) => {
+const ButtonAnimation = ({
+    children,
+    className,
+    onClick,
+}: {
+    children: string
+    className: string
+    onClick: () => void
+}) => {
     return (
-        <button>
-            <span className="button_top">{children}</span>
+        <button onClick={onClick}>
+            <span className={`button_top ${className}`}>{children}</span>
         </button>
     )
 }
