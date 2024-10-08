@@ -18,12 +18,26 @@ const OrderPage = () => {
     const [tgUsername, setTgUsername] = useState('')
     const [recipients, setRecipients] = useState('')
     const [currency, setCurrency] = useState('')
+    const [tokenId, setTokenId] = useState('')
     const [amount, setAmount] = useState('')
     const [isOrderSuccessfull, setisOrderSuccessfull] = useState<boolean>(false)
+    const [recipientAddress, setRecipientAddress] = useState('')
     const { publicKey, connected } = useWallet()
     const router = useRouter()
     const requiredFieldsFilled = Boolean(vaultId || recipients || tgUsername)
+    const vaultIdAndRecipients = vaultId && recipients
+    const usdRequestMoney = tgUsername && amount && currency
+    console.log('recipients', !!recipients)
+    console.log('amount', !!amount)
+    console.log('!tokenId', !!tokenId)
+    console.log('!!vaultId', !!vaultId)
+    const recipientAmountTokenIdVaultId = Boolean(
+        recipients && amount && tokenId && vaultId
+    )
 
+    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
+
+    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         // reset the fields
@@ -254,6 +268,7 @@ const OrderPage = () => {
                                 className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                                 type="text"
                                 placeholder="Please enter recipient address"
+                                onChange={(e) => setRecipients(e.target.value)}
                             />
                             <label
                                 className="mb-[-1.5vh] text-base"
@@ -266,6 +281,7 @@ const OrderPage = () => {
                                 className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                                 type="number"
                                 placeholder="Please enter amount"
+                                onChange={(e) => setAmount(e.target.value)}
                             />
                             <label
                                 className="mb-[-1.5vh] text-base"
@@ -278,6 +294,7 @@ const OrderPage = () => {
                                 className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                                 type="text"
                                 placeholder="Please enter token ID"
+                                onChange={(e) => setTokenId(e.target.value)}
                             />
                             <label
                                 className="mb-[-1.5vh] text-base"
@@ -290,6 +307,7 @@ const OrderPage = () => {
                                 className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                                 type="text"
                                 placeholder="Please enter vault ID"
+                                onChange={(e) => setVaultId(e.target.value)}
                             />
                         </form>
                     </div>
@@ -426,7 +444,7 @@ const OrderPage = () => {
                     type="submit"
                     rel="noreferrer"
                     // disabled={!vaultId || !recipients}
-                    className={`flex w-full items-center justify-center rounded-xl p-3 text-center md:w-80 ${requiredFieldsFilled ? 'cursor-pointer bg-[#00CED1] text-black' : 'cursor-not-allowed bg-[#b0dbdc] text-gray-100'}`}
+                    className={`flex w-full items-center justify-center rounded-xl p-3 text-center md:w-80 ${vaultIdAndRecipients || usdRequestMoney || recipientAmountTokenIdVaultId ? 'cursor-pointer bg-[#00CED1] text-black' : 'cursor-not-allowed bg-[#b0dbdc] text-gray-100'}`}
                     onClick={handleSubmit}
                 >
                     PLACE ORDER
