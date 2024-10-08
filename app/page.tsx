@@ -40,6 +40,7 @@ export default function Page() {
         },
     })
 
+    console.log('data', data)
     const handleRegistration = async (telegramUser: string) => {
         try {
             await axios

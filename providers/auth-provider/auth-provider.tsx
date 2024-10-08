@@ -17,14 +17,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter()
     const { connected } = useWallet()
 
-    if (true) {
+    if (!connected) {
         router.push('/')
     }
 
-    if (true && !isRegistered) {
+    if (connected && !isRegistered) {
         router.push('/')
     }
-    if (true && isRegistered) {
+    if (connected && isRegistered) {
         router.push('/order-page')
     }
     return (
