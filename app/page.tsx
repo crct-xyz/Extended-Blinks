@@ -73,7 +73,7 @@ export default function Page() {
         if (connected && isRegistered) {
             router.push('/order-page')
         }
-    }, [connected, isRegistered, router.push])
+    }, [connected, isRegistered])
 
     return (
         <Fragment>
