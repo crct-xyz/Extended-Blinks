@@ -58,7 +58,7 @@ export const GET = async (req: Request) => {
         const requestUrl = new URL(req.url)
 
         // Fetch order data from your API
-        const orderData = await getOrderData(762)
+        const orderData = await getOrderData(10)
 
         if (!orderData) {
             throw new Error('Order not found.')
@@ -66,11 +66,17 @@ export const GET = async (req: Request) => {
 
         // Extract necessary details from the order data
         const {
+            order_id,
             action_event: {
                 event_type,
                 details: { telegram_username, amount, currency },
             },
         } = orderData
+
+        let orderID
+        if (event_type === 'USDC') {
+            orderID = order_id
+        }
 
         // Generate the Blink's action metadata
         const payload: ActionGetResponse = {
@@ -82,7 +88,7 @@ export const GET = async (req: Request) => {
                 actions: [
                     {
                         label: `Send ${amount} ${currency}`,
-                        href: `/api/actions/usdc?action=send&amount=${amount}&orderID=762`,
+                        href: `/api/actions/usdc?action=send&amount=${amount}&orderID=${orderID}`,
                         type: 'transaction',
                     },
                     {
@@ -147,17 +153,16 @@ export const POST = async (req: Request) => {
             const USDC_MINT = new PublicKey(
                 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
             )
-            const phantomWallet = new PhantomWalletAdapter();
+            const phantomWallet = new PhantomWalletAdapter()
             try {
                 await phantomWallet.connect()
                 const fromPublicKey = phantomWallet.publicKey
                 console.log(fromPublicKey)
                 if (!fromPublicKey) {
-                    throw new Error("Wallet not connected!");
+                    throw new Error('Wallet not connected!')
                 }
-            }
-            catch (error) {
-                console.log("error: ", error)
+            } catch (error) {
+                console.log('error: ', error)
             }
         }
     } catch (error) {
