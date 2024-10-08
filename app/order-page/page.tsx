@@ -3,7 +3,6 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
 import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
 import { useRouter } from 'next/navigation'
-import { useUserContext } from 'providers/context-provider/context-provider'
 import React, { useEffect, useState } from 'react'
 import styles from './order-page.module.css'
 
@@ -17,7 +16,7 @@ const OrderPage = () => {
     const [vaultId, setVaultId] = useState('')
     const [tgUsername, setTgUsername] = useState('')
     const [recipients, setRecipients] = useState('')
-    const [currency, setCurrency] = useState("");
+    const [currency, setCurrency] = useState('')
     const [amount, setAmount] = useState('')
     const [isOrderSuccessfull, setisOrderSuccessfull] = useState<boolean>(false)
     const { publicKey, connected } = useWallet()
@@ -42,13 +41,12 @@ const OrderPage = () => {
                 details: {
                     vault_id: vaultId,
                     recipients: recipients,
-                   
                 },
             },
             user_id: publicKey?.toString(),
             timestamp: Date.now(),
         }
-        
+
         // data for usdc request order
         const usdcRequestData = {
             order_id: Math.floor(Math.random() * 50).toString(),
@@ -58,17 +56,17 @@ const OrderPage = () => {
                 details: {
                     telegram_username: tgUsername,
                     amount: amount,
-                    currency: currency
+                    currency: currency,
                 },
             },
             user_id: publicKey?.toString(),
             timestamp: Date.now(),
         }
-       
+
         try {
-            console.log("sopmqiefm")
+            console.log('sopmqiefm')
             if (!postSquadsReviewData.action_event.details.vault_id) {
-                const {data} = await axios.post(
+                const { data } = await axios.post(
                     'https://squint-api.vercel.app/orders/',
                     usdcRequestData,
                     {
@@ -79,9 +77,8 @@ const OrderPage = () => {
                 )
                 setisOrderSuccessfull(true)
                 return data
-            }
-            else {
-                const {data} = await axios.post(
+            } else {
+                const { data } = await axios.post(
                     'https://squint-api.vercel.app/orders/',
                     postSquadsReviewData,
                     {
@@ -91,9 +88,8 @@ const OrderPage = () => {
                     }
                 )
                 setisOrderSuccessfull(true)
-                return data;
+                return data
             }
-
         } catch (error) {
             setisOrderSuccessfull(false)
             console.log('eror:', error)
@@ -108,7 +104,7 @@ const OrderPage = () => {
         setTgUsername(e.target.value)
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) =>
         setAmount(e.target.value)
-    const handleCurrencyChange =(e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrency(e.target.value)
     }
     const handleReviewClick = () => {
@@ -122,9 +118,11 @@ const OrderPage = () => {
         }
     }
     const handleUSDCClick = () => {
+        setShowSquads(false)
         setShowUSDC((prevState) => !prevState)
     }
     const handleSquadsClick = () => {
+        setShowUSDC(false)
         setShowSquads((prevState) => !prevState)
     }
     const handleRequestUSDC = () => {
@@ -377,7 +375,14 @@ const OrderPage = () => {
                             value={currency}
                             onChange={handleCurrencyChange}
                         >
-                            <option value="" disabled selected hidden>Select a currency</option>
+                            <option
+                                value=""
+                                disabled
+                                selected
+                                hidden
+                            >
+                                Select a currency
+                            </option>
                             <option value="usdc">USDC</option>
                             <option value="sol">Sol</option>
                             <option value="eth">Ethereum</option>
