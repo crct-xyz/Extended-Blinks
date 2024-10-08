@@ -178,14 +178,17 @@ export const POST = async (req: Request) => {
             label: "squads",
             links: {
               actions: [
+                //@ts-ignore
                 {
                   label: 'Approve',
                   href: `${baseHref}?action=approve&multisigAddress=${multisigAddress}&txIndex=${finalTxnIndex}`,
                 },
+                //@ts-ignore
                 {
                   label: 'Reject',
                   href: `${baseHref}?action=reject&multisigAddress=${multisigAddress}&txIndex=${finalTxnIndex} `,
                 },
+                //@ts-ignore
                 {
                   label: 'Execute',
                   href: `${baseHref}?action=execute&multisigAddress=${multisigAddress}&txIndex=${finalTxnIndex}`,
