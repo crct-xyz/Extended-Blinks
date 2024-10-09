@@ -137,12 +137,14 @@ const OrderPage = () => {
         setShowSquads(false)
         setShowReview(false)
         setShowUSDC((prevState) => !prevState)
+        setShowSend(false)
     }
     const handleSquadsClick = () => {
         setShowRequestUSDC(false)
         setShowReview(false)
         setShowUSDC(false)
         setShowSquads((prevState) => !prevState)
+        setShowSend(false)
     }
     const handleRequestUSDC = () => {
         setShowSquads(false)
@@ -259,7 +261,7 @@ const OrderPage = () => {
                         </span>
                         <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                             <label
-                                className="mb-[-1.5vh] text-base"
+                                className="mb-[-1.5vh] text-base font-semibold"
                                 htmlFor="recipientAddress"
                             >
                                 Recipient address
@@ -272,7 +274,7 @@ const OrderPage = () => {
                                 onChange={(e) => setRecipients(e.target.value)}
                             />
                             <label
-                                className="mb-[-1.5vh] text-base"
+                                className="mb-[-1.5vh] text-base font-semibold"
                                 htmlFor="amount"
                             >
                                 Amount
@@ -285,7 +287,7 @@ const OrderPage = () => {
                                 onChange={(e) => setAmount(e.target.value)}
                             />
                             <label
-                                className="mb-[-1.5vh] text-base"
+                                className="mb-[-1.5vh] text-base font-semibold"
                                 htmlFor="asset"
                             >
                                 Token Account ID
@@ -298,7 +300,7 @@ const OrderPage = () => {
                                 onChange={(e) => setTokenId(e.target.value)}
                             />
                             <label
-                                className="mb-[-1.5vh] text-base"
+                                className="mb-[-1.5vh] text-base font-semibold"
                                 htmlFor="vaultId"
                             >
                                 Squads Vault ID
