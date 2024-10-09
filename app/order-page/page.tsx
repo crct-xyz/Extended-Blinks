@@ -2,6 +2,7 @@
 import { useWallet } from '@solana/wallet-adapter-react'
 import axios from 'axios'
 import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
+import ReactTooltip from 'react-tooltip'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styles from './order-page.module.css'
@@ -17,7 +18,7 @@ const OrderPage = () => {
     const [vaultId, setVaultId] = useState('')
     const [tgUsername, setTgUsername] = useState('')
     const [recipients, setRecipients] = useState('')
-    const [currency, setCurrency] = useState('')
+    const [currency, setCurrency] = useState('usdc')
     const [tokenId, setTokenId] = useState('')
     const [amount, setAmount] = useState('')
     const [isOrderSuccessfull, setisOrderSuccessfull] = useState<boolean>(false)
@@ -196,10 +197,10 @@ const OrderPage = () => {
                         >
                             SQUADS
                         </ButtonAnimation>
-                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
-                            JUITER
+                        <ButtonAnimation className="cursor-not-allowed rounded-lg bg-[#D9D9D9] hover:bg-[#858585]">
+                            JUPITER
                         </ButtonAnimation>
-                        <ButtonAnimation className="rounded-lg bg-[#D9D9D9]">
+                        <ButtonAnimation className="cursor-not-allowed rounded-lg bg-[#D9D9D9] hover:bg-[#858585]">
                             TENSOR
                         </ButtonAnimation>
                         <ButtonAnimation
@@ -326,7 +327,7 @@ const OrderPage = () => {
                     </span>
                     <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                         <label
-                            className="mb-[-1.5vh] text-left"
+                            className="mb-[-1.5vh] text-left text-base font-semibold"
                             htmlFor="vaultId"
                         >
                             Vault ID
@@ -341,7 +342,7 @@ const OrderPage = () => {
                             onChange={handleVaultIdChange}
                         />
                         <label
-                            className="mb-[-1.5vh] text-left"
+                            className="mb-[-1.5vh] text-left text-base font-semibold"
                             htmlFor="recipients"
                         >
                             Recipients
@@ -382,22 +383,22 @@ const OrderPage = () => {
                     </span>
                     <form className="border-light-white mt-3 flex w-auto flex-col gap-5 rounded-lg border-2 border-solid bg-[#837e7e] px-5 py-5">
                         <label
-                            className="mb-[-1.5vh] text-left"
+                            className="mb-[-1.5vh] text-left text-base font-semibold"
                             htmlFor="tg_username"
                         >
-                            Username
+                            Requesting from
                         </label>
                         <input
                             id="tg_username"
                             className="rounded-lg bg-[#D9D9D9] px-2 placeholder:text-xs"
                             type="text"
-                            placeholder="Please enter username"
+                            placeholder="Please enter telegram username"
                             required
                             value={tgUsername}
                             onChange={handleUsernameChange}
                         />
                         <label
-                            className="mb-[-1.5vh] text-left"
+                            className="mb-[-1.5vh] text-left text-base font-semibold"
                             htmlFor="amount"
                         >
                             Amount
@@ -412,7 +413,7 @@ const OrderPage = () => {
                             onChange={handleAmountChange}
                         />
                         <label
-                            className="mb-[-1.5vh] text-left"
+                            className="mb-[-1.5vh] text-left text-base font-semibold"
                             htmlFor="currency"
                         >
                             Currency
@@ -424,17 +425,15 @@ const OrderPage = () => {
                             value={currency}
                             onChange={handleCurrencyChange}
                         >
-                            <option
+                            {/* <option
                                 value=""
                                 disabled
                                 selected
                                 hidden
                             >
                                 Select a currency
-                            </option>
+                            </option> */}
                             <option value="usdc">USDC</option>
-                            <option value="sol">Sol</option>
-                            <option value="eth">Ethereum</option>
                         </select>
                     </form>
                 </div>
