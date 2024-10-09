@@ -40,6 +40,7 @@ export default function Page() {
         },
     })
 
+    console.log('data', data)
     const handleRegistration = async (telegramUser: string) => {
         try {
             await axios
@@ -56,14 +57,14 @@ export default function Page() {
         }
     }
 
-    useEffect(() => {
-        if (!connected) {
-            router.push('/')
-        }
-        // if (connected && !isRegistered) {
-        //     router.push('/')
-        // }
-    }, [connected, router.push])
+    // useEffect(() => {
+    //     if (!connected) {
+    //         router.push('/')
+    //     }
+    //     // if (connected && !isRegistered) {
+    //     //     router.push('/')
+    //     // }
+    // }, [connected, router.push])
 
     useEffect(() => {
         if (connected && !isRegistered) {
