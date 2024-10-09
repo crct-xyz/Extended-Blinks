@@ -5,7 +5,7 @@ const ConfirmationModal = ({
 }) => {
     //@ts-ignore
     return (
-        <div className="top-30 absolute right-0 left-0 mx-auto w-96 animate-fadeInUp rounded-md border bg-white p-5 shadow-lg">
+        <div className="top-30 animate-fadeInUp absolute right-0 left-0 z-10 mx-auto w-96 rounded-md border bg-white p-5 shadow-lg">
             <div className="mt-3 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-100">
                     <svg
