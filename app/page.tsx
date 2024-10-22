@@ -76,7 +76,15 @@ export default function Page() {
     }, [connected, isRegistered])
 
     return (
-        <div className="animate-fadeInUp">
+        <div
+            className="animate-fadeInUp"
+            style={{
+                height: '100vh', // center main container
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '100px',
+            }}
+        >
             {connected && isSuccess && !isRegistered && (
                 <RegistrationComp handleRegistration={handleRegistration} />
             )}

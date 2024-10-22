@@ -5,7 +5,6 @@ import ConfirmationModal from 'components/confirmation-modal/confirmation-modal'
 import ReactTooltip from 'react-tooltip'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import styles from './order-page.module.css'
 import ButtonAnimation from 'components/button-animation/button-animation'
 
 const OrderPage = () => {
@@ -28,17 +27,11 @@ const OrderPage = () => {
     const requiredFieldsFilled = Boolean(vaultId || recipients || tgUsername)
     const vaultIdAndRecipients = vaultId && recipients
     const usdRequestMoney = tgUsername && amount && currency
-    console.log('recipients', !!recipients)
-    console.log('amount', !!amount)
-    console.log('!tokenId', !!tokenId)
-    console.log('!!vaultId', !!vaultId)
+
     const recipientAmountTokenIdVaultId = Boolean(
         recipients && amount && tokenId && vaultId
     )
 
-    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
-
-    console.log('recipientAmountTokenIdVaultId', recipientAmountTokenIdVaultId)
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         // reset the fields
@@ -179,7 +172,15 @@ const OrderPage = () => {
     }, [connected, router])
 
     return (
-        <div className="animate-fadeInUp">
+        <div
+            className="animate-fadeInUp"
+            style={{
+                // height: '100vh', // center main container
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '100px',
+            }}
+        >
             <div className="flex items-center justify-center text-center text-5xl">
                 <p className="w-auto leading-tight">
                     <span className="text-[#00CED1]">SET UP&nbsp;</span>
