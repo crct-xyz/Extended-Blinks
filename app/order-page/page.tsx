@@ -175,10 +175,7 @@ const OrderPage = () => {
         <div
             className="animate-fadeInUp"
             style={{
-                // height: '100vh', // center main container
-                display: 'flex',
-                flexDirection: 'column',
-                marginTop: '100px',
+                height: '100vh', // center main container
             }}
         >
             <div className="flex items-center justify-center text-center text-5xl">

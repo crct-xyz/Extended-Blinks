@@ -80,10 +80,9 @@ export default function Page() {
         <div
             className="animate-fadeInUp"
             style={{
-                height: '100vh', // center main container
+                // height: '100vh', // center main container
                 display: 'flex',
                 flexDirection: 'column',
-                marginTop: '100px',
             }}
         >
             {connected && isSuccess && !isRegistered && (
