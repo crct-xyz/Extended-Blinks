@@ -74,10 +74,18 @@ export default function Page() {
         if (connected && isRegistered) {
             router.push('/order-page')
         }
-    }, [connected, isRegistered, router.push])
+    }, [connected, isRegistered])
 
     return (
-        <div className="animate-fadeInUp">
+        <div
+            className="animate-fadeInUp"
+            style={{
+                height: '100vh', // center main container
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '100px',
+            }}
+        >
             {connected && isSuccess && !isRegistered && (
                 <RegistrationComp handleRegistration={handleRegistration} />
             )}
